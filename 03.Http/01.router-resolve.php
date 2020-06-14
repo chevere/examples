@@ -22,7 +22,12 @@ use Chevere\Components\VarDump\VarDumpMake;
 use Chevere\Components\Writers\StreamWriterFromString;
 use Laminas\Diactoros\Uri;
 
-require '../vendor/autoload.php'; // 241 req/s (Internal)
+foreach (['../vendor/autoload.php', 'vendor/autoload.php'] as $autoload) {
+    if (stream_resolve_include_path($autoload)) {
+        require $autoload; // 241 req/s (Internal)
+        break;
+    }
+}
 
 $writer = new StreamWriterFromString('php://stdout', 'w');
 new VarDumpInstance(

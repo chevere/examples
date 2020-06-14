@@ -39,38 +39,33 @@ use Chevere\Examples\HelloWorld\HookHelloWorldController;
 
 require 'vendor/autoload.php';
 
-new WritersInstance(new Writers);
-// new RuntimeInstance(
-//     (new Runtime)
-//         ->withSet(new SetErrorHandler(Handle::class . '::errorsAsExceptions'))
-//         ->withSet(new SetExceptionHandler(Handle::class . '::console'))
+// new WritersInstance(new Writers);
+// new VarDumpInstance(
+//     VarDumpMake::console((new Writers)->out())
 // );
-new VarDumpInstance(
-    VarDumpMake::console((new Writers)->out())
+$routesDir = new DirFromString(__DIR__ . '/routes/');
+$routing = new Routing(
+    new FsRoutesMaker($routesDir),
+    new RouterMaker
 );
-// $routesDir = new DirFromString(__DIR__ . '/routes/');
-// $routing = new Routing(
-//     new FsRoutesMaker($routesDir),
-//     new RouterMaker
-// );
-// $cacheDir = new DirFromString(__DIR__ . '/cache/router/');
-// $cache = new Cache($cacheDir);
-// $routerCache = new RouterCache($cache);
-// $resolver = new Resolver($routerCache);
-// $routerCache->put($routing->router());
+$cacheDir = new DirFromString(__DIR__ . '/cache/router/');
+$cache = new Cache($cacheDir);
+$routerCache = new RouterCache($cache);
+$resolver = new Resolver($routerCache);
+$routerCache->put($routing->router());
 
-try {
-    $hooksDir = new DirFromString(dirname(__DIR__) . '/src/');
-    $hooksMapper = new PlugsMapper($hooksDir, new HookPlugType);
-    xdd($hooksMapper->plugsMap()->hasPluggableName(HookHelloWorldController::class));
-    xdd($hooksMapper->plugsMap()->getPluggableQueue(HookHelloWorldController::class));
-    foreach ($hooksMapper->plugsMap()->getGenerator() as $controller => $plugsQueue) {
-        xdd($controller, $plugsQueue);
-    }
-} catch (Exception $e) {
-    $handler = new ExceptionHandler(new ExceptionRead($e));
-    $document = new ConsoleDocument($handler);
-    echo $document->toString() . "\n";
-}
+// try {
+//     $hooksDir = new DirFromString(dirname(__DIR__) . '/src/');
+//     $hooksMapper = new PlugsMapper($hooksDir, new HookPlugType);
+//     xdd($hooksMapper->plugsMap()->hasPlugsFor(HookHelloWorldController::class));
+//     xdd($hooksMapper->plugsMap()->getPlugsFor(HookHelloWorldController::class));
+//     foreach ($hooksMapper->plugsMap()->getGenerator() as $controller => $plugsQueue) {
+//         xdd($controller, $plugsQueue);
+//     }
+// } catch (Exception $e) {
+//     $handler = new ExceptionHandler(new ExceptionRead($e));
+//     $document = new ConsoleDocument($handler);
+//     echo $document->toString() . "\n";
+// }
 
 // xdd($hooksDir->path()->absolute());
