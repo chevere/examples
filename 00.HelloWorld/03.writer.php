@@ -20,7 +20,7 @@ use Laminas\Diactoros\Stream;
 
 require 'vendor/autoload.php';
 
-$file = new FileFromString(__DIR__ . '/3.writer.php.log');
+$file = new FileFromString(__DIR__ . '/' .  basename(__FILE__) . '.log');
 $writer = new StreamWriter(
     new Stream($file->path()->absolute(), 'w')
 );
@@ -33,4 +33,4 @@ $runner = new ControllerRunner($controller);
 $ran = $runner->ran($arguments);
 $writer->write(implode(' ', $ran->data()));
 
-// Hello, World @ 3.writer.log
+// Hello, World @ 03.writer.php.log
