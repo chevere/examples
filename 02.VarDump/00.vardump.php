@@ -11,15 +11,10 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Instances\VarDumpInstance;
-use Chevere\Components\VarDump\VarDumpMake;
 use Chevere\Components\Writers\StreamWriterFromString;
+use function Chevere\Components\VarDump\getVarDumpConsole;
 
 require 'vendor/autoload.php';
 
 $writer = new StreamWriterFromString('php://stdout', 'w');
-new VarDumpInstance(
-    VarDumpMake::html($writer)
-);
-xd($writer);
-xdd(true, [1, 'string', [new stdClass]]);
+getVarDumpConsole($writer)->withVars('a var')->process();
