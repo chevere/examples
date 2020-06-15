@@ -23,6 +23,4 @@ try {
     $handler = new ExceptionHandler(new ExceptionRead($e));
     $document = new PlainDocument($handler);
     echo $document->toString() . "\n";
-
-    die(255);
 }

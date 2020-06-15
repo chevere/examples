@@ -32,4 +32,4 @@ Same as `00.controller.php` but applying [`HelloWorldEvent`](../src/HelloWorld/H
 
 ### [03.writer.php](03.writer.php)
 
-Same as `00.controller.php` but writing the output to [`03.writer.php.log`](03.writer.php.log) by using a [StreamWriter]().
+Same as `00.controller.php` but writing the output to [`03.writer.php.log`](03.writer.php.log) by using a [stream writer]().
