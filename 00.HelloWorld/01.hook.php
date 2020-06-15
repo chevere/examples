@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Plugs\Hooks\HooksQueue;
-use Chevere\Components\Plugs\Hooks\HooksRunner;
+use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
+use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Examples\HelloWorld\HelloWorldHookHook;
 use Chevere\Examples\HelloWorld\HookHelloWorldController;
 use Chevere\Interfaces\Controller\ControllerInterface;

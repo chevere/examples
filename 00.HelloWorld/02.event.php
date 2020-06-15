@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Plugs\EventListeners\EventListenersQueue;
-use Chevere\Components\Plugs\EventListeners\EventListenersRunner;
+use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersQueue;
+use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersRunner;
 use Chevere\Components\Writers\Writers;
 use Chevere\Examples\HelloWorld\EventHelloWorldController;
 use Chevere\Examples\HelloWorld\HelloWorldEvent;

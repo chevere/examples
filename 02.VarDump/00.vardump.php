@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 use Chevere\Components\Writers\StreamWriterFromString;
 use function Chevere\Components\VarDump\getVarDumpConsole;
+use function Chevere\Components\VarDump\getVarDumpPlain;
 
 require 'vendor/autoload.php';
 
 $writer = new StreamWriterFromString('php://stdout', 'w');
-getVarDumpConsole($writer)->withVars('a var')->process();
+getVarDumpPlain($writer)->withVars('a var')->process();

@@ -15,12 +15,12 @@ namespace Chevere\Examples\HelloWorld;
 
 use Chevere\Components\Controller\ControllerResponse;
 use Chevere\Components\Plugin\PluggableAnchors;
-use Chevere\Components\Plugs\EventListeners\Traits\PluggableEventsTrait;
+use Chevere\Components\Plugin\Plugs\EventListeners\Traits\PluggableEventsTrait;
 use Chevere\Examples\HelloWorld\HelloWorldController;
 use Chevere\Interfaces\Controller\ControllerArgumentsInterface;
 use Chevere\Interfaces\Controller\ControllerResponseInterface;
 use Chevere\Interfaces\Plugin\PluggableAnchorsInterface;
-use Chevere\Interfaces\Plugs\EventListener\PluggableEventsInterface;
+use Chevere\Interfaces\Plugin\Plugs\EventListener\PluggableEventsInterface;
 
 final class EventHelloWorldController extends HelloWorldController implements PluggableEventsInterface
 {

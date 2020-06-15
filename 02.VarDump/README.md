@@ -16,13 +16,13 @@ Showcase usage of [VarDump]() component.
 
 ## [00.vardump.php](00.vardump.php)
 
-Uses the function `Chevere\Components\VarDump\getVarDumpConsole` to quickly build a var dump instance.
+Uses the function `Chevere\Components\VarDump\getVarDumpPlain` to quickly build a plain text var dump instance.
 
-> Output `a var` var dump output to the console 
+> Output `a var` plain text var dump output
 
 ## [01.xdd-plain.php](01.xdd-plain.php)
 
-Uses [VarDumpInstance]() to set a system-wide plain text var dump instance, used by functions `xd` and `xdd`.
+Uses [VarDumpInstance]() to set a system-wide plain text instance, used by functions `xd` and `xdd`.
 
 > Runs `xd` (screen dump) and `xdd` (screen dump and die)
 

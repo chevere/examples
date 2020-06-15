@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Interfaces\Plugs\Hooks\HookInterface;
+use Chevere\Interfaces\Plugin\Plugs\Hooks\HookInterface;
 
 final class HelloWorldHookHook implements HookInterface
 {
