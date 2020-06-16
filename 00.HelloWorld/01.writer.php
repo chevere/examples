@@ -14,16 +14,13 @@ declare(strict_types=1);
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Filesystem\FileFromString;
-use Chevere\Components\Writers\StreamWriter;
+use Chevere\Components\Writers\StreamWriterFromString;
 use Chevere\Examples\HelloWorld\HelloWorldController;
-use Laminas\Diactoros\Stream;
 
 require 'vendor/autoload.php';
 
-$file = new FileFromString(__DIR__ . '/' .  basename(__FILE__) . '.log');
-$writer = new StreamWriter(
-    new Stream($file->path()->absolute(), 'w')
-);
+$file = new FileFromString(__DIR__ . '/' . basename(__FILE__) . '.log');
+$writer = new StreamWriterFromString($file->path()->absolute(), 'w');
 $controller = new HelloWorldController;
 $arguments = new ControllerArguments(
     $controller->parameters(),

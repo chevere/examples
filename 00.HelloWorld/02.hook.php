@@ -15,7 +15,7 @@ use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
-use Chevere\Examples\HelloWorld\HelloWorldHookHook;
+use Chevere\Examples\HelloWorld\HelloWorldHook;
 use Chevere\Examples\HelloWorld\HookHelloWorldController;
 use Chevere\Interfaces\Controller\ControllerInterface;
 
@@ -25,7 +25,7 @@ $controller = new HookHelloWorldController;
 $controller = $controller->withHooksRunner(
     new HooksRunner(
         (new HooksQueue)
-            ->withAddedHook(new HelloWorldHookHook)
+            ->withAdded(new HelloWorldHook)
     )
 );
 /**

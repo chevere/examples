@@ -1,6 +1,6 @@
 http:
   address: 0.0.0.0:8080
   workers:
-    command: "php 03.Http/02.router-resolve-rr.php"
+    command: "php 03.Http/02.router-resolve-roadrunner.php"
     pool:
       numWorkers: 4

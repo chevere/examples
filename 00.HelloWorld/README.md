@@ -26,7 +26,7 @@ Same as `00.controller.php` but writing the output to [`01.writer.php.log`](01.w
 
 ### [02.hook.php](02.hook.php)
 
-Same as `00.controller.php` but applying [`HelloWorldHookHook`](../src/HelloWorld/HelloWorldHookHook.php) [hook](https://github.com/chevere/docs/blob/master/components/plugin.md#pluggable-hooks).
+Same as `00.controller.php` but applying [`HelloWorldHook`](../src/HelloWorld/HelloWorldHook.php) [hook](https://github.com/chevere/docs/blob/master/components/plugin.md#pluggable-hooks).
 
 > Hello, World!!
 

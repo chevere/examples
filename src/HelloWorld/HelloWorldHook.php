@@ -15,7 +15,7 @@ namespace Chevere\Examples\HelloWorld;
 
 use Chevere\Interfaces\Plugin\Plugs\Hooks\HookInterface;
 
-final class HelloWorldHookHook implements HookInterface
+final class HelloWorldHook implements HookInterface
 {
     public function anchor(): string
     {

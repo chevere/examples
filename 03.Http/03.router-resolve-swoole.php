@@ -18,13 +18,13 @@ use Chevere\Components\ExceptionHandler\Documents\HtmlDocument;
 use Chevere\Components\ExceptionHandler\ExceptionHandler;
 use Chevere\Components\ExceptionHandler\ExceptionRead;
 use Chevere\Components\Filesystem\DirFromString;
-use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
+use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\Resolver;
 use Chevere\Components\Router\RouterCache;
-use Chevere\Examples\HelloWorld\HelloWorldHookHook;
 use Chevere\Exceptions\Router\RouteNotFoundException;
 use Chevere\Interfaces\Controller\ControllerInterface;
+use Ds\Map;
 use Imefisto\PsrSwoole\Request as PsrRequest;
 use Imefisto\PsrSwoole\ResponseMerger;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -33,40 +33,58 @@ use Swoole\Http\Response;
 use Swoole\Http\Server;
 
 require 'vendor/autoload.php'; // 11544 req/s
-$cacheDir = new DirFromString(__DIR__ . '/cache/router/');
+$cacheDir = new DirFromString(__DIR__ . '/cache/');
 $cache = new Cache($cacheDir);
-$routerCache = new RouterCache($cache);
+$routerCache = new RouterCache($cache->getChild('router/'));
+$hooksCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
 $resolver = new Resolver($routerCache);
 $server = new Server('127.0.0.1', 9501);
 $psrFactory = new Psr17Factory;
 $responseMerger = new ResponseMerger;
+$plugsQueueMap = new Map;
+$routesMap = new Map;
 $server->on('start', function (Server $server)
 {
     echo "Swoole http server is started at http://127.0.0.1:9501\n";
 });
 $server->on('request', function (Request $request, Response $response) use (
     $routerCache,
+    $hooksCache,
     $resolver,
     $psrFactory,
-    $responseMerger
+    $responseMerger,
+    $plugsQueueMap,
+    $routesMap
 ) {
     try {
         $psrRequest = new PsrRequest($request, $psrFactory, $psrFactory);
         $uri = $psrRequest->getUri();
         $routed = $resolver->resolve($uri);
         $routeName = $routed->name()->toString();
-        $route = $routerCache->routesCache()->get($routeName);
+        try {
+            $route = $routesMap->get($routeName);
+        } catch (OutOfBoundsException $e) {
+            $route = $routerCache->routesCache()->get($routeName);
+            $routesMap->put($routeName, $route);
+        }
         $endpoint = $route->endpoints()->get($psrRequest->getMethod());
         $controller = $endpoint->controller();
-        // $controller = $controller->withHooksRunner(
-        //     new HooksRunner(
-        //         (new HooksQueue)
-        //             ->withAddedHook(new HelloWorldHookHook)
-        //     )
-        // );
-        // /**
-        //  * @var ControllerInterface $controller
-        //  */
+        $controllerName = get_class($controller);
+        try {
+            $hooksQueue = $plugsQueueMap->get($controllerName);
+        } catch (OutOfBoundsException $e) {
+            $hooksQueue = $hooksCache->getPlugsQueueFor(get_class($controller));
+            $plugsQueueMap->put($controllerName, $hooksQueue);
+        }
+        /**
+         * @var PluggableHooksInterface $controller
+         */
+        $controller = $controller->withHooksRunner(
+            new HooksRunner($hooksQueue)
+        );
+        /**
+         * @var ControllerInterface $controller
+         */
         $runner = new ControllerRunner($controller);
         $arguments = new ControllerArguments(
             $controller->parameters(),
@@ -90,4 +108,4 @@ $server->on('request', function (Request $request, Response $response) use (
 });
 $server->start();
 
-// ["Hello, rodolfo"]
+// ["Hello, rodolfo!!"]
