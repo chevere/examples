@@ -43,9 +43,9 @@ $routerCache = new RouterCache($cache->getChild('router/'));
 $resolver = new Resolver($routerCache);
 $routerCache->withPut($routing->router());
 // Hooks caching
-$hooksCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
+$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
 $plugsMapper = new PlugsMapper(
     new DirFromString(dirname(__DIR__) . '/src/'),
     new HookPlugType
 );
-$hooksCache->withPut($plugsMapper->plugsMap());
+$plugsMapCache->withPut($plugsMapper->plugsMap());

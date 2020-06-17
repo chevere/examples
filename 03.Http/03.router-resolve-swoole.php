@@ -36,7 +36,7 @@ require 'vendor/autoload.php'; // 11544 req/s
 $cacheDir = new DirFromString(__DIR__ . '/cache/');
 $cache = new Cache($cacheDir);
 $routerCache = new RouterCache($cache->getChild('router/'));
-$hooksCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
+$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
 $resolver = new Resolver($routerCache);
 $server = new Server('127.0.0.1', 9501);
 $psrFactory = new Psr17Factory;
@@ -49,7 +49,7 @@ $server->on('start', function (Server $server)
 });
 $server->on('request', function (Request $request, Response $response) use (
     $routerCache,
-    $hooksCache,
+    $plugsMapCache,
     $resolver,
     $psrFactory,
     $responseMerger,
@@ -73,7 +73,7 @@ $server->on('request', function (Request $request, Response $response) use (
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
-            $hooksQueue = $hooksCache->getPlugsQueueFor(get_class($controller));
+            $hooksQueue = $plugsMapCache->getPlugsQueueFor(get_class($controller));
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
         /**

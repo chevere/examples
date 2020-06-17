@@ -40,8 +40,8 @@ $route = $routerCache->routesCache()->get($routeName);
 $endpoint = $route->endpoints()->get('GET');
 $controller = $endpoint->controller();
 // Hooks caching
-$hooksCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
-$hooksQueue = $hooksCache->getPlugsQueueFor(get_class($controller));
+$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
+$hooksQueue = $plugsMapCache->getPlugsQueueFor(get_class($controller));
 /**
  * @var PluggableHooksInterface $controller
  */

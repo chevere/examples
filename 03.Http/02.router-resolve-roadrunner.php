@@ -32,7 +32,7 @@ require 'vendor/autoload.php'; // 8140 req/s
 $cacheDir = new DirFromString(__DIR__ . '/cache/');
 $cache = new Cache($cacheDir);
 $routerCache = new RouterCache($cache->getChild('router/'));
-$hooksCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
+$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
 $resolver = new Resolver($routerCache);
 $roadRunnerWorker = new RoadRunner\Worker(new Goridge\StreamRelay(STDIN, STDOUT));
 $psr7 = new RoadRunner\PSR7Client($roadRunnerWorker);
@@ -55,7 +55,7 @@ while ($psrRequest = $psr7->acceptRequest()) {
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
-            $hooksQueue = $hooksCache->getPlugsQueueFor(get_class($controller));
+            $hooksQueue = $plugsMapCache->getPlugsQueueFor(get_class($controller));
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
         /**
