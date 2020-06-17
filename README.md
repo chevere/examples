@@ -4,12 +4,12 @@ This repository holds a collection of examples on Chevere usage.
 
 ## Installation
 
-```bash
+```shell
 composer install
 ```
 
 ## Usage
 
-```bash
+```shell
 php <pathToScript>
 ```

@@ -29,7 +29,7 @@ Resolves cached routing for the `/hello-chevere/` uri, applying hooks.
 
 Run it using the built-in server:
 
-```bash
+```shell
 php -S 127.0.0.1:8888 -t 03.Http/ 
 ```
 
@@ -43,7 +43,7 @@ Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/).
 
 Run it using `rr`:
 
-```bash
+```shell
 ./rr serve -v 
 ```
 
@@ -59,7 +59,7 @@ Same as `01.router-resolve.php` but under [Swoole](https://www.swoole.co.uk/). A
 
 Run it using:
 
-```bash
+```shell
 php 03.Http/03.router-resolve-swoole.php
 ```
 
