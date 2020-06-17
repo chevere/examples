@@ -29,5 +29,6 @@ $arguments = new ControllerArguments(
 $runner = new ControllerRunner($controller);
 $ran = $runner->ran($arguments);
 $writer->write(implode(' ', $ran->data()));
+echo 'Wrote: ' . $file->path()->absolute() . "\n";
 
-// Hello, World @ 03.writer.php.log
+// Wrote: <path>

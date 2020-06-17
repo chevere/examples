@@ -73,7 +73,7 @@ $server->on('request', function (Request $request, Response $response) use (
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
-            $hooksQueue = $plugsMapCache->getPlugsQueueFor(get_class($controller));
+            $hooksQueue = $plugsMapCache->getPlugsQueueFor($controllerName);
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
         /**
@@ -108,4 +108,4 @@ $server->on('request', function (Request $request, Response $response) use (
 });
 $server->start();
 
-// ["Hello, rodolfo!!"]
+// ["Hello, swoole!!"]

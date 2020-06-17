@@ -27,7 +27,7 @@ $controller = new EventHelloWorldController;
 $controller = $controller->withEventListenersRunner(
     new EventListenersRunner(
         (new EventListenersQueue)
-            ->withAddedEventListener(new HelloWorldEvent),
+            ->withAdded(new HelloWorldEvent),
         $writers
     )
 );
@@ -40,9 +40,9 @@ $arguments = new ControllerArguments(
 );
 $runner = new ControllerRunner($controller);
 $ran = $runner->ran($arguments);
-echo "\n-----\n";
-echo implode(' ', $ran->data());
+echo "\n...\n";
+echo implode(' ', $ran->data()) . "\n";
 
 // Chevere\Examples\HelloWorldEvent>>>Hello, World
-// -----
+// ...
 // Hello, World

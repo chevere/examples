@@ -12,7 +12,6 @@
 declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
-use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Filesystem\DirFromString;
 use Chevere\Components\Instances\VarDumpInstance;
 use Chevere\Components\Plugin\PlugsMapCache;
