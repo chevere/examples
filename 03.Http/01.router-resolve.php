@@ -56,7 +56,7 @@ $arguments = new ControllerArguments(
     $routed->arguments()
 );
 $runner = new ControllerRunner($controller);
-$ran = $runner->ran($arguments);
+$ran = $runner->execute($arguments);
 echo json_encode($ran->data());
 
 // ["Hello, chevere!!"]

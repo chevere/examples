@@ -27,7 +27,7 @@ $arguments = new ControllerArguments(
     ['name' => 'World']
 );
 $runner = new ControllerRunner($controller);
-$ran = $runner->ran($arguments);
+$ran = $runner->execute($arguments);
 $writer->write(implode(' ', $ran->data()));
 echo 'Wrote: ' . $file->path()->absolute() . "\n";
 

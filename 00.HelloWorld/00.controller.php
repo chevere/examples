@@ -23,7 +23,7 @@ $arguments = new ControllerArguments(
     ['name' => 'World']
 );
 $runner = new ControllerRunner($controller);
-$ran = $runner->ran($arguments);
+$ran = $runner->execute($arguments);
 echo implode(' ', $ran->data()) . "\n";
 
 // Hello, World

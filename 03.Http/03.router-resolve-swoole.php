@@ -90,7 +90,7 @@ $server->on('request', function (Request $request, Response $response) use (
             $controller->parameters(),
             $routed->arguments()
         );
-        $ran = $runner->ran($arguments);
+        $ran = $runner->execute($arguments);
         $psrResponse = $psrFactory->createResponse();
         $psrResponse->getBody()->write(json_encode($ran->data()));
         $response->header('Content-Type', 'text/plain');

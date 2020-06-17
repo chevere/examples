@@ -72,7 +72,7 @@ while ($psrRequest = $psr7->acceptRequest()) {
             $controller->parameters(),
             $routed->arguments()
         );
-        $ran = $runner->ran($arguments);
+        $ran = $runner->execute($arguments);
         $response = new Response;
         $response->getBody()->write(json_encode($ran->data()));
         $psr7->respond($response);
