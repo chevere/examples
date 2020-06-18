@@ -11,11 +11,10 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\Filesystem\FileFromString;
 use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
-use Chevere\Components\ThrowableHandler\Documents\PlainDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
-use Chevere\Components\Filesystem\FileFromString;
 use Chevere\Components\Writers\StreamWriterFromString;
 
 require 'vendor/autoload.php';
@@ -29,8 +28,8 @@ try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
     $handler = new ThrowableHandler(new ThrowableRead($e));
-    $docLoud = new HtmlDocument($handler->withIsDebug(true));
-    $docSilent = new HtmlDocument($handler);
+    $docLoud = new HtmlDocument($handler);
+    $docSilent = new HtmlDocument($handler->withIsDebug(false));
     $loudWriter->write($docLoud->toString());
     $silentWriter->write($docSilent->toString());
 }

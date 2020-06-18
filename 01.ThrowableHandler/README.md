@@ -1,6 +1,6 @@
-# 01.Exceptions
+# 01.ThrowableHandler
 
-- [01.Exceptions](#01exceptions)
+- [01.ThrowableHandler](#01throwablehandler)
   - [Description](#description)
   - [Examples](#examples)
     - [00.handle-plain.php](#00handle-plainphp)
