@@ -15,7 +15,7 @@ use Chevere\Components\Filesystem\FileFromString;
 use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
-use Chevere\Components\Writers\StreamWriterFromString;
+use Chevere\Components\Writer\StreamWriterFromString;
 
 require 'vendor/autoload.php';
 

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Examples\HelloWorld;
 
 use Chevere\Interfaces\Plugin\Plugs\EventListener\EventListenerInterface;
-use Chevere\Interfaces\Writers\WritersInterface;
+use Chevere\Interfaces\Writer\WritersInterface;
 
 final class HelloWorldEvent implements EventListenerInterface
 {

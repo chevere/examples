@@ -15,7 +15,7 @@ use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersQueue;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersRunner;
-use Chevere\Components\Writers\Writers;
+use Chevere\Components\Writer\Writers;
 use Chevere\Examples\HelloWorld\EventHelloWorldController;
 use Chevere\Examples\HelloWorld\HelloWorldEvent;
 use Chevere\Interfaces\Controller\ControllerInterface;

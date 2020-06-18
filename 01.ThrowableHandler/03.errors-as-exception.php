@@ -17,7 +17,7 @@ use Chevere\Components\Instances\WritersInstance;
 use Chevere\Components\Runtime\Runtime;
 use Chevere\Components\Runtime\Sets\SetErrorHandler;
 use Chevere\Components\Runtime\Sets\SetExceptionHandler;
-use Chevere\Components\Writers\Writers;
+use Chevere\Components\Writer\Writers;
 
 require 'vendor/autoload.php';
 

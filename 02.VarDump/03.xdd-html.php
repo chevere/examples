@@ -12,7 +12,7 @@
 declare(strict_types=1);
 
 use Chevere\Components\Instances\VarDumpInstance;
-use Chevere\Components\Writers\StreamWriterFromString;
+use Chevere\Components\Writer\StreamWriterFromString;
 use function Chevere\Components\VarDump\getVarDumpHtml;
 
 require 'vendor/autoload.php';

@@ -14,7 +14,7 @@ declare(strict_types=1);
 use Chevere\Components\VarDump\Formatters\ConsoleFormatter;
 use Chevere\Components\VarDump\Outputters\ConsoleOutputter;
 use Chevere\Components\VarDump\VarDump;
-use Chevere\Components\Writers\StreamWriterFromString;
+use Chevere\Components\Writer\StreamWriterFromString;
 
 require 'vendor/autoload.php';
 
