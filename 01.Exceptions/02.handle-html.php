@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\ExceptionHandler\Documents\HtmlDocument;
-use Chevere\Components\ExceptionHandler\Documents\PlainDocument;
-use Chevere\Components\ExceptionHandler\ExceptionHandler;
-use Chevere\Components\ExceptionHandler\ExceptionRead;
+use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
+use Chevere\Components\ThrowableHandler\Documents\PlainDocument;
+use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Components\Filesystem\FileFromString;
 use Chevere\Components\Writers\StreamWriterFromString;
 
@@ -28,7 +28,7 @@ $silentWriter = new StreamWriterFromString($htmlSilent->path()->absolute(), 'w')
 try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
-    $handler = new ExceptionHandler(new ExceptionRead($e));
+    $handler = new ThrowableHandler(new ThrowableRead($e));
     $docLoud = new HtmlDocument($handler->withIsDebug(true));
     $docSilent = new HtmlDocument($handler);
     $loudWriter->write($docLoud->toString());

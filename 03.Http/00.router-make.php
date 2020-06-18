@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Filesystem\DirFromString;
-use Chevere\Components\Instances\VarDumpInstance;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Plugin\PlugsMapper;
 use Chevere\Components\Plugin\Types\HookPlugType;
@@ -22,14 +21,9 @@ use Chevere\Components\Router\RouterCache;
 use Chevere\Components\Router\RouterMaker;
 use Chevere\Components\Routing\FsRoutesMaker;
 use Chevere\Components\Routing\Routing;
-use Chevere\Components\Writers\StreamWriterFromString;
-use function Chevere\Components\VarDump\getVarDumpConsole;
 
 require 'vendor/autoload.php';
 
-new VarDumpInstance(
-    getVarDumpConsole(new StreamWriterFromString('php://stdout', 'w'))
-);
 $routing = new Routing(
     new FsRoutesMaker(
         new DirFromString(__DIR__ . '/routes/')

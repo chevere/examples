@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\ExceptionHandler\Handle;
+use Chevere\Components\ThrowableHandler\Handle;
 use Chevere\Components\Instances\RuntimeInstance;
 use Chevere\Components\Instances\WritersInstance;
 use Chevere\Components\Runtime\Runtime;

@@ -14,9 +14,9 @@ declare(strict_types=1);
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\ExceptionHandler\Documents\HtmlDocument;
-use Chevere\Components\ExceptionHandler\ExceptionHandler;
-use Chevere\Components\ExceptionHandler\ExceptionRead;
+use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
+use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Components\Filesystem\DirFromString;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
@@ -100,7 +100,7 @@ $server->on('request', function (Request $request, Response $response) use (
         $response->end();
     } catch (\Exception $e) {
         $response->header('Content-Type', 'text/html');
-        $handler = new ExceptionHandler(new ExceptionRead($e));
+        $handler = new ThrowableHandler(new ThrowableRead($e));
         $document = new HtmlDocument($handler);
         $response->status(500);
         $response->end($document->toString());

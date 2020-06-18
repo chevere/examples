@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\ExceptionHandler\Documents\ConsoleDocument;
-use Chevere\Components\ExceptionHandler\ExceptionHandler;
-use Chevere\Components\ExceptionHandler\ExceptionRead;
+use Chevere\Components\ThrowableHandler\Documents\ConsoleDocument;
+use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use Chevere\Components\ThrowableHandler\ThrowableRead;
 
 require 'vendor/autoload.php';
 
 try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
-    $handler = new ExceptionHandler(new ExceptionRead($e));
+    $handler = new ThrowableHandler(new ThrowableRead($e));
     $document = new ConsoleDocument($handler);
     echo $document->toString() . "\n";
 }

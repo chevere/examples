@@ -11,11 +11,16 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\VarDump\Formatters\PlainFormatter;
+use Chevere\Components\VarDump\Outputters\PlainOutputter;
+use Chevere\Components\VarDump\VarDump;
 use Chevere\Components\Writers\StreamWriterFromString;
-use function Chevere\Components\VarDump\getVarDumpConsole;
-use function Chevere\Components\VarDump\getVarDumpPlain;
 
 require 'vendor/autoload.php';
 
+$varDump = new VarDump(
+    new PlainFormatter,
+    new PlainOutputter
+);
 $writer = new StreamWriterFromString('php://stdout', 'w');
-getVarDumpPlain($writer)->withVars('a var')->process();
+$varDump->withVars('a var', [], null)->process($writer);
