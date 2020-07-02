@@ -6,28 +6,16 @@
     "license": "MIT",
     "authors": [{
         "name": "Rodolfo Berrios",
-        "email": "rodolfo@chevereto.com",
-        "homepage": "https://chevereto.com"
+        "email": "rodolfo@chevere.org",
+        "homepage": "https://chevere.org/get-started/learn-by-example.html"
     }],
-    "repositories": {
-        "dev-package": {
-            "type": "path",
-            "url": "/home/rodolfo/git/chevere/chevere",
-            "options": {
-                "symlink": true
-            }
-        }
-    },
     "autoload": {
         "psr-4": {
             "Chevere\\Examples\\": "src/"
         }
     },
-    "config": {
-        "sort-packages": true
-    },
     "require": {
-        "chevere/chevere": "@dev",
+        "chevere/chevere": "dev-master",
         "imefisto/psr-swoole-native": "^0.0.1",
         "nyholm/psr7": "^1.3",
         "spiral/roadrunner": "^1.8"
