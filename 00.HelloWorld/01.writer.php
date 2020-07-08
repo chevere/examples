@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Filesystem\FileFromString;
 use Chevere\Components\Writer\StreamWriterFromString;
 use Chevere\Examples\HelloWorld\HelloWorldController;
+use function Chevere\Components\Filesystem\getFileFromString;
 
 require 'vendor/autoload.php';
 
-$file = new FileFromString(__DIR__ . '/' . basename(__FILE__) . '.log');
+$file = getFileFromString(__DIR__ . '/' . basename(__FILE__) . '.log');
 $writer = new StreamWriterFromString($file->path()->absolute(), 'w');
 $controller = new HelloWorldController;
 $arguments = new ControllerArguments(
@@ -28,7 +28,14 @@ $arguments = new ControllerArguments(
 );
 $runner = new ControllerRunner($controller);
 $ran = $runner->execute($arguments);
-$writer->write(implode(' ', $ran->data()));
+$contents = implode(' ', $ran->data());
+$writer->write($contents);
+if ($file->contents() !== $contents) {
+    echo "Failed to write contents\n";
+    exit(1);
+}
+if ($contents !== 'Hello, World') {
+    echo "Unexpected contents\n";
+    exit(1);
+}
 echo 'Wrote: ' . $file->path()->absolute() . "\n";
-
-// Wrote: <path>

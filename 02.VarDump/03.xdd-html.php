@@ -19,5 +19,4 @@ require 'vendor/autoload.php';
 
 $writer = new StreamWriterFromString('php://stdout', 'w');
 new VarDumpInstance(getVarDumpHtml());
-xd($writer);
 xdd(true, [1, 'string', [new stdClass]]);

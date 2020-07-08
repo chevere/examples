@@ -37,7 +37,7 @@ final class HookHelloWorldController extends HelloWorldController implements Plu
         $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
         $this->hook('beforeResponse', $greet);
 
-        return (new ControllerResponse(true))
+        return (new ControllerResponse(true, []))
             ->withData([$greet]);
     }
 }

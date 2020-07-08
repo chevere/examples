@@ -37,6 +37,9 @@ $arguments = new ControllerArguments(
 );
 $runner = new ControllerRunner($controller);
 $ran = $runner->execute($arguments);
-echo implode(' ', $ran->data()) . "\n";
-
-// Hello, World!!
+$contents = implode(' ', $ran->data());
+if ($contents !== 'Hello, World!!') {
+    echo "Unexpected contents\n";
+    exit(1);
+}
+echo "$contents\n";

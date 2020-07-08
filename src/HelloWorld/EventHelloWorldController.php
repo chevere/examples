@@ -37,7 +37,7 @@ final class EventHelloWorldController extends HelloWorldController implements Pl
         $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
         $this->event('greetSet', [$greet]);
 
-        return (new ControllerResponse(true))
+        return (new ControllerResponse(true, []))
             ->withData([$greet]);
     }
 }

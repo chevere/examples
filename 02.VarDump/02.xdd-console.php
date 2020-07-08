@@ -17,5 +17,4 @@ use function Chevere\Components\VarDump\getVarDumpConsole;
 require 'vendor/autoload.php';
 
 new VarDumpInstance(getVarDumpConsole());
-xd($writer);
 xdd(true, [1, 'string', [new stdClass]]);

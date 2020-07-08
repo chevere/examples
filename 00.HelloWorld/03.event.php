@@ -40,9 +40,11 @@ $arguments = new ControllerArguments(
 );
 $runner = new ControllerRunner($controller);
 $ran = $runner->execute($arguments);
-echo "\n...\n";
-echo implode(' ', $ran->data()) . "\n";
-
-// Chevere\Examples\HelloWorldEvent>>>Hello, World
-// ...
-// Hello, World
+$contents = implode(' ', $ran->data());
+if ($writers->out()->toString() != HelloWorldEvent::class . '>>>' . $contents) {
+    echo "Unexpected event\n";
+    exit(1);
+} else {
+    echo "Event listened\n";
+}
+echo "$contents\n";

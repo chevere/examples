@@ -23,7 +23,10 @@ $arguments = new ControllerArguments(
     ['name' => 'World']
 );
 $runner = new ControllerRunner($controller);
-$ran = $runner->execute($arguments);
-echo implode(' ', $ran->data()) . "\n";
-
-// Hello, World
+$execute = $runner->execute($arguments);
+$contents = implode(' ', $execute->data());
+if ($contents !== 'Hello, World') {
+    echo "Unexpected contents\n";
+    exit(1);
+}
+echo "$contents\n";

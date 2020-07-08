@@ -11,10 +11,7 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Instances\VarDumpInstance;
-use function Chevere\Components\VarDump\getVarDumpPlain;
-
 require 'vendor/autoload.php';
 
-new VarDumpInstance(getVarDumpPlain());
-xdd(true, [1, 'string', [new stdClass]]);
+set_exception_handler('Chevere\Components\ThrowableHandler\consoleHandler');
+throw new \Exception('Some exception', 666);

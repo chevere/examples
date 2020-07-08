@@ -11,25 +11,25 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Filesystem\FileFromString;
-use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
+use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerHtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Components\Writer\StreamWriterFromString;
+use function Chevere\Components\Filesystem\getFileFromString;
 
 require 'vendor/autoload.php';
 
 $baseFilePath = __DIR__ . '/' . basename(__FILE__);
-$htmlLoud = new FileFromString($baseFilePath . '-loud.html');
-$htmlSilent = new FileFromString($baseFilePath . '-silent.html');
+$htmlLoud = getFileFromString($baseFilePath . '-loud.html');
+$htmlSilent = getFileFromString($baseFilePath . '-silent.html');
 $loudWriter = new StreamWriterFromString($htmlLoud->path()->absolute(), 'w');
 $silentWriter = new StreamWriterFromString($htmlSilent->path()->absolute(), 'w');
 try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
     $handler = new ThrowableHandler(new ThrowableRead($e));
-    $docLoud = new HtmlDocument($handler);
-    $docSilent = new HtmlDocument($handler->withIsDebug(false));
+    $docLoud = new ThrowableHandlerHtmlDocument($handler);
+    $docSilent = new ThrowableHandlerHtmlDocument($handler->withIsDebug(false));
     $loudWriter->write($docLoud->toString());
     $silentWriter->write($docSilent->toString());
 }

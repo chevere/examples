@@ -11,16 +11,18 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\VarDump\Formatters\ConsoleFormatter;
-use Chevere\Components\VarDump\Outputters\ConsoleOutputter;
+use Chevere\Components\VarDump\Formatters\VarDumpConsoleFormatter;
+use Chevere\Components\VarDump\Outputters\VarDumpConsoleOutputter;
 use Chevere\Components\VarDump\VarDump;
 use Chevere\Components\Writer\StreamWriterFromString;
 
 require 'vendor/autoload.php';
 
 $varDump = new VarDump(
-    new ConsoleFormatter,
-    new ConsoleOutputter
+    new VarDumpConsoleFormatter,
+    new VarDumpConsoleOutputter
 );
 $writer = new StreamWriterFromString('php://stdout', 'w');
 $varDump->withVars('a var', [], null)->process($writer);
+// All the above is the same as:
+xd('a var', [], null);

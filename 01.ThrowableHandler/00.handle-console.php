@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\ThrowableHandler\Documents\ConsoleDocument;
+use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 
@@ -21,6 +21,6 @@ try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
     $handler = new ThrowableHandler(new ThrowableRead($e));
-    $document = new ConsoleDocument($handler);
+    $document = new ThrowableHandlerConsoleDocument($handler);
     echo $document->toString() . "\n";
 }

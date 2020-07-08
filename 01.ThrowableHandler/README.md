@@ -7,6 +7,7 @@
     - [01.handle-console.php](#01handle-consolephp)
     - [02.handle-html.php](#02handle-htmlphp)
     - [03.errors-as-exception.php](#03errors-as-exceptionphp)
+    - [04.exceptions-in-console.php](#04exceptions-in-consolephp)
 
 ## Description
 
@@ -34,6 +35,12 @@ Same as `00.handle-plain.php` but generating two documents, for the same caught 
 
 ### [03.errors-as-exception.php](03.errors-as-exception.php)
 
-An example of [RuntimeInstance]() setting the console exception handler, and handling errors as exceptions.
+An example using `\set_error_handler` for handling errors as exceptions.
 
-> Output a console exception output for 1/0
+> Output `Caught a nasty exception!`
+
+### [04.exceptions-in-console.php](04.exceptions-in-console.php)
+
+An example using `\set_exception_handler` for handling exceptions in the console.
+
+> Output a console exception document

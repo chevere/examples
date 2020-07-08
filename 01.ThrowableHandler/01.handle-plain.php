@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\ThrowableHandler\Documents\PlainDocument;
+use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerPlainDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 
@@ -21,6 +21,6 @@ try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
     $handler = new ThrowableHandler(new ThrowableRead($e));
-    $document = new PlainDocument($handler);
+    $document = new ThrowableHandlerPlainDocument($handler);
     echo $document->toString() . "\n";
 }

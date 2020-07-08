@@ -41,7 +41,7 @@ class HelloWorldController extends Controller
     {
         $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
 
-        return (new ControllerResponse(true))
+        return (new ControllerResponse(true, []))
             ->withData([$greet]);
     }
 }
