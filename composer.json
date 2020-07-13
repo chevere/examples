@@ -4,11 +4,22 @@
     "homepage": "https://chevere.org",
     "type": "library",
     "license": "MIT",
-    "authors": [{
-        "name": "Rodolfo Berrios",
-        "email": "rodolfo@chevere.org",
-        "homepage": "https://chevere.org/get-started/learn-by-example.html"
-    }],
+    "authors": [
+        {
+            "name": "Rodolfo Berrios",
+            "email": "rodolfo@chevere.org",
+            "homepage": "https://chevere.org/get-started/learn-by-example.html"
+        }
+    ],
+    "repositories": {
+        "dev-package": {
+            "type": "path",
+            "url": "/home/rodolfo/git/chevere/chevere",
+            "options": {
+                "symlink": true
+            }
+        }
+    },
     "autoload": {
         "psr-4": {
             "Chevere\\Examples\\": "src/"

@@ -12,28 +12,35 @@
 declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
+use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Filesystem\DirFromString;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
-use Chevere\Components\Router\Resolver;
-use Chevere\Components\Router\RouterCache;
+use Chevere\Components\Router\RouterDispatcher;
 use Chevere\Interfaces\Controller\ControllerInterface;
 use Chevere\Interfaces\Plugin\Plugs\Hooks\PluggableHooksInterface;
 use Ds\Map;
 use Laminas\Diactoros\Response;
 use Spiral\Goridge;
 use Spiral\RoadRunner;
+use function Chevere\Components\Filesystem\getDirFromString;
+
+// 12k req/s (./rr serve -v)
 
 ini_set('display_errors', 'stderr');
-require 'vendor/autoload.php'; // 8140 req/s
+require 'vendor/autoload.php';
 
-$cacheDir = new DirFromString(__DIR__ . '/cache/');
-$cache = new Cache($cacheDir);
-$routerCache = new RouterCache($cache->getChild('router/'));
-$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
-$resolver = new Resolver($routerCache);
+$dir = getDirFromString(__DIR__ . '/');
+$cacheDir = $dir->getChild('cache/');
+$routeCollector = (new Cache($cacheDir->getChild('router/')))
+    ->get(new CacheKey('my-route-collector'))
+    ->var();
+$dispatcher = new RouterDispatcher($routeCollector);
+// Hooks caching
+$plugsMapCache = new PlugsMapCache(
+    new Cache($cacheDir->getChild('plugs/hooks/'))
+);
 $roadRunnerWorker = new RoadRunner\Worker(new Goridge\StreamRelay(STDIN, STDOUT));
 $psr7 = new RoadRunner\PSR7Client($roadRunnerWorker);
 $plugsQueueMap = new Map;
@@ -41,17 +48,9 @@ $routesMap = new Map;
 while ($psrRequest = $psr7->acceptRequest()) {
     try {
         $uri = $psrRequest->getUri();
-        $routed = $resolver->resolve($uri);
-        $routeName = $routed->name()->toString();
-        try {
-            $route = $routesMap->get($routeName);
-        } catch (OutOfBoundsException $e) {
-            $route = $routerCache->routesCache()->get($routeName);
-            $routesMap->put($routeName, $route);
-        }
-        $endpoint = $route->endpoints()->get($psrRequest->getMethod());
-        $controller = $endpoint->controller();
-        $controllerName = get_class($controller);
+        $routed = $dispatcher->dispatch($psrRequest->getMethod(), $uri->getPath());
+        $controllerName = $routed->controllerName()->toString();
+        $controller = new $controllerName;
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {

@@ -12,34 +12,33 @@
 declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
-use Chevere\Components\Filesystem\DirFromString;
+use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Plugin\PlugsMapper;
 use Chevere\Components\Plugin\Types\HookPlugType;
-use Chevere\Components\Router\Resolver;
-use Chevere\Components\Router\Router;
-use Chevere\Components\Router\RouterCache;
 use Chevere\Components\Routing\FsRoutesMaker;
 use Chevere\Components\Routing\Routing;
+use Chevere\Components\VarExportable\VarExportable;
 use function Chevere\Components\Filesystem\getDirFromString;
 
 require 'vendor/autoload.php';
 
-$routing = new Routing(
-    new FsRoutesMaker(
-        getDirFromString(__DIR__ . '/routes/')
-    ),
-    new Router
-);
-$cache = new Cache(getDirFromString(__DIR__ . '/cache/'));
-// Router caching
-$routerCache = new RouterCache($cache->getChild('router/'));
-$resolver = new Resolver($routerCache);
-$routerCache->withPut($routing->router());
-// Hooks caching
-$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
+$dir = getDirFromString(__DIR__ . '/');
+$cacheDir = $dir->getChild('cache/');
+$fsRoutesMaker = new FsRoutesMaker($dir->getChild('routes/'));
+$router = (new Routing($fsRoutesMaker))->router();
+$cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
+    ->withAddedItem(
+        new CacheKey('my-route-collector'),
+        new VarExportable($router->routeCollector())
+    );
+echo "Cached my-route-collector\n";
 $plugsMapper = new PlugsMapper(
     getDirFromString(dirname(__DIR__) . '/src/'),
     new HookPlugType
 );
-$plugsMapCache->withPut($plugsMapper->plugsMap());
+$plugsMapCache = new PlugsMapCache(
+    new Cache($cacheDir->getChild('plugs/hooks/'))
+);
+$plugsMapCache = $plugsMapCache->withPut($plugsMapper->plugsMap());
+echo "Cached plugs map\n";

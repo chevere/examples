@@ -12,16 +12,16 @@
 declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
+use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
-use Chevere\Components\ThrowableHandler\ThrowableHandler;
-use Chevere\Components\ThrowableHandler\ThrowableRead;
-use Chevere\Components\Filesystem\DirFromString;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\Resolver;
-use Chevere\Components\Router\RouterCache;
+use Chevere\Components\Router\RouterDispatcher;
+use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
+use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Exceptions\Router\RouteNotFoundException;
 use Chevere\Interfaces\Controller\ControllerInterface;
 use Ds\Map;
@@ -31,13 +31,22 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
+use function Chevere\Components\Filesystem\getDirFromString;
 
-require 'vendor/autoload.php'; // 11544 req/s
-$cacheDir = new DirFromString(__DIR__ . '/cache/');
-$cache = new Cache($cacheDir);
-$routerCache = new RouterCache($cache->getChild('router/'));
-$plugsMapCache = new PlugsMapCache($cache->getChild('plugs/hooks/'));
-$resolver = new Resolver($routerCache);
+ // 13K req/s (php swoole)
+
+require 'vendor/autoload.php';
+
+$dir = getDirFromString(__DIR__ . '/');
+$cacheDir = $dir->getChild('cache/');
+$routeCollector = (new Cache($cacheDir->getChild('router/')))
+    ->get(new CacheKey('my-route-collector'))
+    ->var();
+$dispatcher = new RouterDispatcher($routeCollector);
+// Hooks caching
+$plugsMapCache = new PlugsMapCache(
+    new Cache($cacheDir->getChild('plugs/hooks/'))
+);
 $server = new Server('127.0.0.1', 9501);
 $psrFactory = new Psr17Factory;
 $responseMerger = new ResponseMerger;
@@ -48,28 +57,18 @@ $server->on('start', function (Server $server)
     echo "Swoole http server is started at http://127.0.0.1:9501\n";
 });
 $server->on('request', function (Request $request, Response $response) use (
-    $routerCache,
     $plugsMapCache,
-    $resolver,
+    $dispatcher,
     $psrFactory,
     $responseMerger,
-    $plugsQueueMap,
-    $routesMap
+    $plugsQueueMap
 ) {
     try {
         $psrRequest = new PsrRequest($request, $psrFactory, $psrFactory);
         $uri = $psrRequest->getUri();
-        $routed = $resolver->resolve($uri);
-        $routeName = $routed->name()->toString();
-        try {
-            $route = $routesMap->get($routeName);
-        } catch (OutOfBoundsException $e) {
-            $route = $routerCache->routesCache()->get($routeName);
-            $routesMap->put($routeName, $route);
-        }
-        $endpoint = $route->endpoints()->get($psrRequest->getMethod());
-        $controller = $endpoint->controller();
-        $controllerName = get_class($controller);
+        $routed = $dispatcher->dispatch($psrRequest->getMethod(), $uri->getPath());
+        $controllerName = $routed->controllerName()->toString();
+        $controller = new $controllerName;
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
