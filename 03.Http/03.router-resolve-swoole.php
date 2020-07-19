@@ -17,7 +17,6 @@ use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
-use Chevere\Components\Router\Resolver;
 use Chevere\Components\Router\RouterDispatcher;
 use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;

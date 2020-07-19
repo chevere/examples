@@ -14,7 +14,8 @@ declare(strict_types=1);
 use Chevere\Components\VarDump\Formatters\VarDumpConsoleFormatter;
 use Chevere\Components\VarDump\Outputters\VarDumpConsoleOutputter;
 use Chevere\Components\VarDump\VarDump;
-use Chevere\Components\Writer\StreamWriterFromString;
+use Chevere\Components\Writer\StreamWriter;
+use function Chevere\Components\Writer\streamFor;
 
 require 'vendor/autoload.php';
 
@@ -22,7 +23,7 @@ $varDump = new VarDump(
     new VarDumpConsoleFormatter,
     new VarDumpConsoleOutputter
 );
-$writer = new StreamWriterFromString('php://stdout', 'w');
+$writer = new StreamWriter(streamFor('php://stdout', 'w'));
 $varDump->withVars('a var', [], null)->process($writer);
 // All the above is the same as:
 xd('a var', [], null);

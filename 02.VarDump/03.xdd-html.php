@@ -12,11 +12,12 @@
 declare(strict_types=1);
 
 use Chevere\Components\Instances\VarDumpInstance;
-use Chevere\Components\Writer\StreamWriterFromString;
-use function Chevere\Components\VarDump\getVarDumpHtml;
+use Chevere\Components\Writer\StreamWriter;
+use function Chevere\Components\VarDump\varDumpHtml;
+use function Chevere\Components\Writer\streamFor;
 
 require 'vendor/autoload.php';
 
-$writer = new StreamWriterFromString('php://stdout', 'w');
-new VarDumpInstance(getVarDumpHtml());
+$writer = new StreamWriter(streamFor('php://stdout', 'w'));
+new VarDumpInstance(varDumpHtml());
 xdd(true, [1, 'string', [new stdClass]]);

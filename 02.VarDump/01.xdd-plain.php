@@ -12,9 +12,9 @@
 declare(strict_types=1);
 
 use Chevere\Components\Instances\VarDumpInstance;
-use function Chevere\Components\VarDump\getVarDumpPlain;
+use function Chevere\Components\VarDump\varDumpPlain;
 
 require 'vendor/autoload.php';
 
-new VarDumpInstance(getVarDumpPlain());
+new VarDumpInstance(varDumpPlain());
 xdd(true, [1, 'string', [new stdClass]]);

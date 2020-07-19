@@ -24,14 +24,14 @@ use Ds\Map;
 use Laminas\Diactoros\Response;
 use Spiral\Goridge;
 use Spiral\RoadRunner;
-use function Chevere\Components\Filesystem\getDirFromString;
+use function Chevere\Components\Filesystem\dirFromString;
 
 // 12k req/s (./rr serve -v)
 
 ini_set('display_errors', 'stderr');
 require 'vendor/autoload.php';
 
-$dir = getDirFromString(__DIR__ . '/');
+$dir = dirFromString(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
