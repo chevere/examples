@@ -16,17 +16,18 @@ use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Plugin\PlugsMapper;
 use Chevere\Components\Plugin\Types\HookPlugType;
-use Chevere\Components\Routing\FsRoutesMaker;
-use Chevere\Components\Routing\Routing;
+use Chevere\Components\Routing\RoutingDescriptorsMaker;
 use Chevere\Components\VarExportable\VarExportable;
 use function Chevere\Components\Filesystem\dirFromString;
+use function Chevere\Components\Routing\routerForRoutingDescriptors;
 
 require 'vendor/autoload.php';
 
 $dir = dirFromString(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
-$fsRoutesMaker = new FsRoutesMaker($dir->getChild('routes/'));
-$router = (new Routing($fsRoutesMaker))->router();
+$maker = new RoutingDescriptorsMaker($dir->getChild('routes/'));
+$descriptors = $maker->descriptors();
+$router = routerForRoutingDescriptors($descriptors, 'example');
 $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
     ->withAddedItem(
         new CacheKey('my-route-collector'),

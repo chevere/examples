@@ -18,7 +18,7 @@ use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
-use Chevere\Components\ThrowableHandler\Documents\HtmlDocument;
+use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerHtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Exceptions\Router\RouteNotFoundException;
@@ -30,13 +30,13 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
-use function Chevere\Components\Filesystem\getDirFromString;
+use function Chevere\Components\Filesystem\dirFromString;
 
  // 13K req/s (php swoole)
 
 require 'vendor/autoload.php';
 
-$dir = getDirFromString(__DIR__ . '/');
+$dir = dirFromString(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
@@ -99,7 +99,7 @@ $server->on('request', function (Request $request, Response $response) use (
     } catch (\Exception $e) {
         $response->header('Content-Type', 'text/html');
         $handler = new ThrowableHandler(new ThrowableRead($e));
-        $document = new HtmlDocument($handler);
+        $document = new ThrowableHandlerHtmlDocument($handler);
         $response->status(500);
         $response->end($document->toString());
     }
