@@ -29,7 +29,7 @@ final class HookHelloWorldController extends HelloWorldController implements Plu
     public static function getHookAnchors(): PluggableAnchorsInterface
     {
         return (new PluggableAnchors)
-            ->withAddedAnchor('beforeResponse');
+            ->withAdded('beforeResponse');
     }
 
     public function run(ControllerArgumentsInterface $controllerArguments): ControllerResponseInterface

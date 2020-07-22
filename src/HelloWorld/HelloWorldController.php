@@ -27,7 +27,7 @@ class HelloWorldController extends Controller
     public function getParameters(): ControllerParametersInterface
     {
         return (new ControllerParameters)
-            ->withParameter(
+            ->withAdded(
                 new ControllerParameter('name', new Regex('/\w+/'))
             );
     }
