@@ -18,12 +18,12 @@ use Chevere\Components\Plugin\PlugsMapper;
 use Chevere\Components\Plugin\Types\HookPlugType;
 use Chevere\Components\Routing\RoutingDescriptorsMaker;
 use Chevere\Components\VarExportable\VarExportable;
-use function Chevere\Components\Filesystem\dirFromString;
+use function Chevere\Components\Filesystem\dirForString;
 use function Chevere\Components\Routing\routerForRoutingDescriptors;
 
 require 'vendor/autoload.php';
 
-$dir = dirFromString(__DIR__ . '/');
+$dir = dirForString(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $maker = new RoutingDescriptorsMaker($dir->getChild('routes/'));
 $descriptors = $maker->descriptors();
@@ -35,7 +35,7 @@ $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
     );
 echo "Cached my-route-collector\n";
 $plugsMapper = new PlugsMapper(
-    dirFromString(dirname(__DIR__) . '/src/'),
+    dirForString(dirname(__DIR__) . '/src/'),
     new HookPlugType
 );
 $plugsMapCache = new PlugsMapCache(

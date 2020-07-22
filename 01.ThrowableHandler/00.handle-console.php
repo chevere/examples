@@ -11,14 +11,24 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\Message\Message;
 use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
+use Chevere\Exceptions\Core\InvalidArgumentException;
 
 require 'vendor/autoload.php';
 
 try {
-    throw new Exception('Whoops...');
+    try {
+        throw new Exception('Chained invalid argument.');
+    } catch (Exception $e) {
+        throw new InvalidArgumentException(
+            new Message('Whoops...'),
+            666,
+            $e
+        );
+    }
 } catch (Exception $e) {
     $handler = new ThrowableHandler(new ThrowableRead($e));
     $document = new ThrowableHandlerConsoleDocument($handler);

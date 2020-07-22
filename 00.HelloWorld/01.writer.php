@@ -13,14 +13,16 @@ declare(strict_types=1);
 
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Writer\StreamWriter;
 use Chevere\Examples\HelloWorld\HelloWorldController;
-use function Chevere\Components\Filesystem\fileFromString;
-use function Chevere\Components\Writer\writerForFile;
+use function Chevere\Components\Filesystem\fileForString;
+use function Chevere\Components\Writer\streamFor;
 
 require 'vendor/autoload.php';
 
-$file = fileFromString(__DIR__ . '/' . basename(__FILE__) . '.log');
-$writer = writerForFile($file, 'w');
+$filename = __DIR__ . '/' . basename(__FILE__) . '.log';
+$file = fileForString($filename);
+$writer = new StreamWriter(streamFor($filename, 'w'));
 $controller = new HelloWorldController;
 $arguments = new ControllerArguments(
     $controller->parameters(),

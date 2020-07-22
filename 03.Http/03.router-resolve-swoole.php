@@ -30,13 +30,13 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
-use function Chevere\Components\Filesystem\dirFromString;
+use function Chevere\Components\Filesystem\dirForString;
 
  // 13K req/s (php swoole)
 
 require 'vendor/autoload.php';
 
-$dir = dirFromString(__DIR__ . '/');
+$dir = dirForString(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))

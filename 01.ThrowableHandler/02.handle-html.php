@@ -14,16 +14,16 @@ declare(strict_types=1);
 use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerHtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
-use function Chevere\Components\Filesystem\fileFromString;
-use function Chevere\Components\Writer\writerForFile;
+use Chevere\Components\Writer\StreamWriter;
+use function Chevere\Components\Writer\streamFor;
 
 require 'vendor/autoload.php';
 
 $baseFilePath = __DIR__ . '/' . basename(__FILE__);
-$htmlLoud = fileFromString($baseFilePath . '-loud.html');
-$htmlSilent = fileFromString($baseFilePath . '-silent.html');
-$loudWriter = writerForFile($htmlLoud, 'w');
-$silentWriter = writerForFile($htmlSilent, 'w');
+$htmlLoud = $baseFilePath . '-loud.html';
+$htmlSilent = $baseFilePath . '-silent.html';
+$loudWriter = new StreamWriter(streamFor($htmlLoud, 'w'));
+$silentWriter = new StreamWriter(streamFor($htmlSilent, 'w'));
 try {
     throw new Exception('Whoops...');
 } catch (Exception $e) {
