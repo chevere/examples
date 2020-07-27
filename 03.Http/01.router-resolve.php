@@ -42,7 +42,7 @@ $controller = new $controllerName;
 $plugsMapCache = new PlugsMapCache(
     new Cache($cacheDir->getChild('plugs/hooks/'))
 );
-$hooksQueue = $plugsMapCache->getPlugsQueueFor(get_class($controller));
+$hooksQueue = $plugsMapCache->getPlugsQueueTypedFor(get_class($controller));
 /**
  * @var PluggableHooksInterface $controller
  */

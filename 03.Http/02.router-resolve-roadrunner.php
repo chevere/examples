@@ -54,7 +54,7 @@ while ($psrRequest = $psr7->acceptRequest()) {
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
-            $hooksQueue = $plugsMapCache->getPlugsQueueFor($controllerName);
+            $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor($controllerName);
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
         /**
