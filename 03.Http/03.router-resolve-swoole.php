@@ -32,7 +32,8 @@ use Swoole\Http\Response;
 use Swoole\Http\Server;
 use function Chevere\Components\Filesystem\dirForString;
 
- // 13K req/s (php swoole)
+// no xdebug!
+// 13428.49 req/s (php swoole)
 
 require 'vendor/autoload.php';
 

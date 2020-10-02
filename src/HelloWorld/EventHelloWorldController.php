@@ -16,11 +16,14 @@ namespace Chevere\Examples\HelloWorld;
 use Chevere\Components\Controller\ControllerResponse;
 use Chevere\Components\Plugin\PluggableAnchors;
 use Chevere\Components\Plugin\Plugs\EventListeners\Traits\PluggableEventsTrait;
+use Chevere\Components\Response\ResponseSuccess;
 use Chevere\Examples\HelloWorld\HelloWorldController;
 use Chevere\Interfaces\Controller\ControllerArgumentsInterface;
 use Chevere\Interfaces\Controller\ControllerResponseInterface;
+use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Plugin\PluggableAnchorsInterface;
 use Chevere\Interfaces\Plugin\Plugs\EventListener\PluggableEventsInterface;
+use Chevere\Interfaces\Response\ResponseInterface;
 
 final class EventHelloWorldController extends HelloWorldController implements PluggableEventsInterface
 {
@@ -29,15 +32,14 @@ final class EventHelloWorldController extends HelloWorldController implements Pl
     public static function getEventAnchors(): PluggableAnchorsInterface
     {
         return (new PluggableAnchors)
-            ->withAddedAnchor('greetSet');
+            ->withAdded('greetSet');
     }
 
-    public function run(ControllerArgumentsInterface $controllerArguments): ControllerResponseInterface
+    public function run(ArgumentsInterface $arguments): ResponseInterface
     {
-        $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
+        $greet = sprintf('Hello, %s', $arguments->get('name'));
         $this->event('greetSet', [$greet]);
 
-        return (new ControllerResponse(true, []))
-            ->withData([$greet]);
+        return (new ResponseSuccess([$greet]));
     }
 }

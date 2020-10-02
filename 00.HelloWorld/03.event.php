@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersQueue;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersRunner;
 use Chevere\Components\Writer\Writers;
@@ -34,7 +35,7 @@ $controller = $controller->withEventListenersRunner(
 /**
  * @var ControllerInterface $controller
  */
-$arguments = new ControllerArguments(
+$arguments = new Arguments(
     $controller->parameters(),
     ['name' => 'World']
 );

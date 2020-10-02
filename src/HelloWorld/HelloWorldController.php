@@ -14,21 +14,21 @@ declare(strict_types=1);
 namespace Chevere\Examples\HelloWorld;
 
 use Chevere\Components\Controller\Controller;
-use Chevere\Components\Controller\ControllerParameter;
-use Chevere\Components\Controller\ControllerParameters;
-use Chevere\Components\Controller\ControllerResponse;
+use Chevere\Components\Parameter\ParameterRequired;
+use Chevere\Components\Parameter\Parameters;
 use Chevere\Components\Regex\Regex;
-use Chevere\Interfaces\Controller\ControllerArgumentsInterface;
-use Chevere\Interfaces\Controller\ControllerParametersInterface;
-use Chevere\Interfaces\Controller\ControllerResponseInterface;
+use Chevere\Components\Response\ResponseSuccess;
+use Chevere\Interfaces\Parameter\ArgumentsInterface;
+use Chevere\Interfaces\Parameter\ParametersInterface;
+use Chevere\Interfaces\Response\ResponseInterface;
 
 class HelloWorldController extends Controller
 {
-    public function getParameters(): ControllerParametersInterface
+    public function getParameters(): ParametersInterface
     {
-        return (new ControllerParameters)
+        return (new Parameters)
             ->withAdded(
-                new ControllerParameter('name', new Regex('/\w+/'))
+                new ParameterRequired('name', new Regex('/\w+/'))
             );
     }
 
@@ -37,11 +37,10 @@ class HelloWorldController extends Controller
         return 'It returns Hello, <name>';
     }
 
-    public function run(ControllerArgumentsInterface $controllerArguments): ControllerResponseInterface
+    public function run(ArgumentsInterface $arguments): ResponseInterface
     {
-        $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
+        $greet = sprintf('Hello, %s', $arguments->get('name'));
 
-        return (new ControllerResponse(true, []))
-            ->withData([$greet]);
+        return (new ResponseSuccess([$greet]));
     }
 }

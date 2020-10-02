@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Examples\HelloWorld\HelloWorldController;
 use function Chevere\Components\Filesystem\fileForString;
@@ -24,7 +24,7 @@ $filename = __DIR__ . '/' . basename(__FILE__) . '.log';
 $file = fileForString($filename);
 $writer = new StreamWriter(streamFor($filename, 'w'));
 $controller = new HelloWorldController;
-$arguments = new ControllerArguments(
+$arguments = new Arguments(
     $controller->parameters(),
     ['name' => 'World']
 );

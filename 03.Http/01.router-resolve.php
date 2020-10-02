@@ -21,7 +21,9 @@ use Chevere\Components\Router\RouterDispatcher;
 use Chevere\Interfaces\Controller\ControllerInterface;
 use function Chevere\Components\Filesystem\dirForString;
 
-// 750 req/s (php -S, no xdebug)
+// no xdebug!
+// 419.86 req/s (php -S)
+// 884.46 req/s (Apache 2.4)
 
 foreach (['vendor/autoload.php', '../vendor/autoload.php'] as $autoload) {
     if (stream_resolve_include_path($autoload)) {

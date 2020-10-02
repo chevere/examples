@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Components\Controller\ControllerResponse;
 use Chevere\Components\Plugin\PluggableAnchors;
 use Chevere\Components\Plugin\Plugs\Hooks\Traits\PluggableHooksTrait;
+use Chevere\Components\Response\ResponseSuccess;
 use Chevere\Examples\HelloWorld\HelloWorldController;
-use Chevere\Interfaces\Controller\ControllerArgumentsInterface;
-use Chevere\Interfaces\Controller\ControllerResponseInterface;
+use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Plugin\PluggableAnchorsInterface;
 use Chevere\Interfaces\Plugin\Plugs\Hooks\PluggableHooksInterface;
+use Chevere\Interfaces\Response\ResponseInterface;
 
 final class HookHelloWorldController extends HelloWorldController implements PluggableHooksInterface
 {
@@ -32,12 +32,11 @@ final class HookHelloWorldController extends HelloWorldController implements Plu
             ->withAdded('beforeResponse');
     }
 
-    public function run(ControllerArgumentsInterface $controllerArguments): ControllerResponseInterface
+    public function run(ArgumentsInterface $arguments): ResponseInterface
     {
-        $greet = sprintf('Hello, %s', $controllerArguments->get('name'));
+        $greet = sprintf('Hello, %s', $arguments->get('name'));
         $this->hook('beforeResponse', $greet);
 
-        return (new ControllerResponse(true, []))
-            ->withData([$greet]);
+        return new ResponseSuccess([$greet]);
     }
 }

@@ -26,7 +26,8 @@ use Spiral\Goridge;
 use Spiral\RoadRunner;
 use function Chevere\Components\Filesystem\dirForString;
 
-// 12k req/s (./rr serve -v)
+// no xdebug!
+// 11818.71 req/s (./rr serve -v)
 
 ini_set('display_errors', 'stderr');
 require 'vendor/autoload.php';

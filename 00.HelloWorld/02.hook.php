@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Examples\HelloWorld\HelloWorldHook;
@@ -31,7 +31,7 @@ $controller = $controller->withHooksRunner(
 /**
  * @var ControllerInterface $controller
  */
-$arguments = new ControllerArguments(
+$arguments = new Arguments(
     $controller->parameters(),
     ['name' => 'World']
 );
