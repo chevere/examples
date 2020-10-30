@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
@@ -24,7 +24,7 @@ use Ds\Map;
 use Laminas\Diactoros\Response;
 use Spiral\Goridge;
 use Spiral\RoadRunner;
-use function Chevere\Components\Filesystem\dirForString;
+use function Chevere\Components\Filesystem\dirForPath;
 
 // no xdebug!
 // 11818.71 req/s (./rr serve -v)
@@ -32,7 +32,7 @@ use function Chevere\Components\Filesystem\dirForString;
 ini_set('display_errors', 'stderr');
 require 'vendor/autoload.php';
 
-$dir = dirForString(__DIR__ . '/');
+$dir = dirForPath(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
@@ -68,7 +68,7 @@ while ($psrRequest = $psr7->acceptRequest()) {
          * @var ControllerInterface $controller
          */
         $runner = new ControllerRunner($controller);
-        $arguments = new ControllerArguments(
+        $arguments = new Arguments(
             $controller->parameters(),
             $routed->arguments()
         );

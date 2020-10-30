@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
 use Chevere\Interfaces\Controller\ControllerInterface;
-use function Chevere\Components\Filesystem\dirForString;
+use function Chevere\Components\Filesystem\dirForPath;
 
 // no xdebug!
 // 419.86 req/s (php -S)
@@ -31,7 +31,7 @@ foreach (['vendor/autoload.php', '../vendor/autoload.php'] as $autoload) {
         break;
     }
 }
-$dir = dirForString(__DIR__ . '/');
+$dir = dirForPath(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
@@ -54,7 +54,7 @@ $controller = $controller->withHooksRunner(
 /**
  * @var ControllerInterface $controller
  */
-$arguments = new ControllerArguments(
+$arguments = new Arguments(
     $controller->parameters(),
     $routed->arguments()
 );

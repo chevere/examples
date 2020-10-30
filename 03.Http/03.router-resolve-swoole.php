@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerArguments;
 use Chevere\Components\Controller\ControllerRunner;
+use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
@@ -30,14 +30,14 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
-use function Chevere\Components\Filesystem\dirForString;
+use function Chevere\Components\Filesystem\dirForPath;
 
 // no xdebug!
 // 13428.49 req/s (php swoole)
 
 require 'vendor/autoload.php';
 
-$dir = dirForString(__DIR__ . '/');
+$dir = dirForPath(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
 $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
@@ -85,7 +85,7 @@ $server->on('request', function (Request $request, Response $response) use (
          * @var ControllerInterface $controller
          */
         $runner = new ControllerRunner($controller);
-        $arguments = new ControllerArguments(
+        $arguments = new Arguments(
             $controller->parameters(),
             $routed->arguments()
         );

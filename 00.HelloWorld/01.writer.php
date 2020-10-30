@@ -15,13 +15,13 @@ use Chevere\Components\Controller\ControllerRunner;
 use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Examples\HelloWorld\HelloWorldController;
-use function Chevere\Components\Filesystem\fileForString;
+use function Chevere\Components\Filesystem\fileForPath;
 use function Chevere\Components\Writer\streamFor;
 
 require 'vendor/autoload.php';
 
 $filename = __DIR__ . '/' . basename(__FILE__) . '.log';
-$file = fileForString($filename);
+$file = fileForPath($filename);
 $writer = new StreamWriter(streamFor($filename, 'w'));
 $controller = new HelloWorldController;
 $arguments = new Arguments(

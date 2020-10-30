@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Chevere\Examples\HelloWorld;
 
 use Chevere\Components\Controller\Controller;
-use Chevere\Components\Parameter\ParameterRequired;
 use Chevere\Components\Parameter\Parameters;
+use Chevere\Components\Parameter\StringParameter;
 use Chevere\Components\Regex\Regex;
 use Chevere\Components\Response\ResponseSuccess;
 use Chevere\Interfaces\Parameter\ArgumentsInterface;
@@ -27,8 +27,9 @@ class HelloWorldController extends Controller
     public function getParameters(): ParametersInterface
     {
         return (new Parameters)
-            ->withAdded(
-                new ParameterRequired('name', new Regex('/\w+/'))
+            ->withAddedRequired(
+                (new StringParameter('name'))
+                    ->withRegex(new Regex('/\w+/'))
             );
     }
 
