@@ -11,13 +11,11 @@
 
 declare(strict_types=1);
 
-use Chevere\Exceptions\Core\ErrorException;
-
 require 'vendor/autoload.php';
 
 set_error_handler('Chevere\Components\ThrowableHandler\errorsAsExceptions');
 try {
-    1 / 0;
+    trigger_error('User error', E_USER_ERROR);
 } catch (ErrorException $e) {
-    echo "Caught a nasty exception!\n";
+    echo "Caught an error as exception\n";
 }

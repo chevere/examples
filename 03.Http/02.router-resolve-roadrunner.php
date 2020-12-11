@@ -11,15 +11,12 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
-use Chevere\Interfaces\Controller\ControllerInterface;
-use Chevere\Interfaces\Plugin\Plugs\Hooks\PluggableHooksInterface;
 use Ds\Map;
 use Laminas\Diactoros\Response;
 use Spiral\Goridge;
@@ -58,21 +55,11 @@ while ($psrRequest = $psr7->acceptRequest()) {
             $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor($controllerName);
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
-        /**
-         * @var PluggableHooksInterface $controller
-         */
         $controller = $controller->withHooksRunner(
             new HooksRunner($hooksQueue)
         );
-        /**
-         * @var ControllerInterface $controller
-         */
-        $runner = new ControllerRunner($controller);
-        $arguments = new Arguments(
-            $controller->parameters(),
-            $routed->arguments()
-        );
-        $ran = $runner->execute($arguments);
+        $runner = new ActionRunner($controller);
+        $ran = $runner->execute(...$routed->arguments());
         $response = new Response;
         $response->getBody()->write(json_encode($ran->data()));
         $psr7->respond($response);
@@ -81,4 +68,4 @@ while ($psrRequest = $psr7->acceptRequest()) {
     }
 }
 
-// ["Hello, roadrunner!!"]
+// ["greet" => "Hello, roadrunner!!"]

@@ -37,7 +37,7 @@ Same as `00.handle-plain.php` but generating two documents, for the same caught 
 
 An example using `\set_error_handler` for handling errors as exceptions.
 
-> Output `Caught a nasty exception!`
+> Output `Caught an error as exception`
 
 ### [04.exceptions-in-console.php](04.exceptions-in-console.php)
 

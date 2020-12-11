@@ -35,11 +35,15 @@ php -S 127.0.0.1:8888 -t 03.Http/
 
 Requests `http://127.0.0.1:8888/01.router-resolve.php`
 
-> Outputs ["Hello, chevere!!"]
+> Outputs ["greet" => "Hello, chevere!!"]
 
 ### [02.router-resolve-roadrunner.php](02.router-resolve-roadrunner.php)
 
-Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/). 
+Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/). You will need to build the binary running the following command:
+
+```shell
+./vendor/bin/rr get
+```
 
 Run it using `rr`:
 
@@ -51,7 +55,11 @@ Run it using `rr`:
 
 Requests `http://127.0.0.1:8080/hello-roadrunner/`
 
-> Outputs ["Hello, roadrunner!!"]
+```shell
+curl http://127.0.0.1:8080/hello-roadrunner/
+```
+
+> Outputs ["greet" => "Hello, roadrunner!!"]
 
 ### [03.router-resolve-swoole.php](03.router-resolve-swoole.php)
 
@@ -65,7 +73,11 @@ php 03.Http/03.router-resolve-swoole.php
 
 Requests `http://127.0.0.1:9501/hello-swoole/`
 
-> Outputs ["Hello, swoole!!"]
+```shell
+curl http://127.0.0.1:9501/hello-swoole/
+```
+
+> Outputs ["greet" => "Hello, swoole!!"]
 
 ## Notes
 

@@ -11,14 +11,12 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
-use Chevere\Interfaces\Controller\ControllerInterface;
 use function Chevere\Components\Filesystem\dirForPath;
 
 // no xdebug!
@@ -45,21 +43,11 @@ $plugsMapCache = new PlugsMapCache(
     new Cache($cacheDir->getChild('plugs/hooks/'))
 );
 $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor(get_class($controller));
-/**
- * @var PluggableHooksInterface $controller
- */
 $controller = $controller->withHooksRunner(
     new HooksRunner($hooksQueue)
 );
-/**
- * @var ControllerInterface $controller
- */
-$arguments = new Arguments(
-    $controller->parameters(),
-    $routed->arguments()
-);
-$runner = new ControllerRunner($controller);
-$ran = $runner->execute($arguments);
+$runner = new ActionRunner($controller);
+$ran = $runner->execute(name: 'chevere');
 echo json_encode($ran->data());
 
-// ["Hello, chevere!!"]
+// ["greet" => "Hello, World!!"]

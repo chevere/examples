@@ -21,7 +21,11 @@ use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Plugin\PluggableAnchorsInterface;
 use Chevere\Interfaces\Plugin\Plugs\Hooks\PluggableHooksInterface;
 use Chevere\Interfaces\Response\ResponseInterface;
+use Chevere\Interfaces\Response\ResponseSuccessInterface;
 
+/**
+ * @method self withHooksRunner(HooksRunnerInterface $hooksRunner)
+ */
 final class HookHelloWorldController extends HelloWorldController implements PluggableHooksInterface
 {
     use PluggableHooksTrait;
@@ -32,11 +36,11 @@ final class HookHelloWorldController extends HelloWorldController implements Plu
             ->withAdded('beforeResponse');
     }
 
-    public function run(ArgumentsInterface $arguments): ResponseInterface
+    public function run(ArgumentsInterface $arguments): ResponseSuccessInterface
     {
         $greet = sprintf('Hello, %s', $arguments->get('name'));
         $this->hook('beforeResponse', $greet);
 
-        return new ResponseSuccess([$greet]);
+        return $this->getResponseSuccess(['greet' => $greet]);
     }
 }

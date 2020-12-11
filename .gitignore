@@ -1,6 +1,8 @@
 # Composer
 /vendor
 /composer.lock
+/composer-dev.json
+/composer-dev.lock
 
 # PHP-CS-Fixer
 /.php_cs
@@ -9,3 +11,6 @@
 # PHPUnit
 /.phpunit.cache
 .phpunit.result.cache
+
+# RoadRunner
+/rr

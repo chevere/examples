@@ -11,22 +11,17 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Examples\HelloWorld\HelloWorldController;
 
 require 'vendor/autoload.php';
 
 $controller = new HelloWorldController;
-$arguments = new Arguments(
-    $controller->parameters(),
-    ['name' => 'World']
-);
-$runner = new ControllerRunner($controller);
-$execute = $runner->execute($arguments);
+$runner = new ActionRunner($controller);
+$execute = $runner->execute(name: 'World');
 $contents = implode(' ', $execute->data());
 if ($contents !== 'Hello, World') {
     echo "Unexpected contents\n";
-    exit(1);
 }
 echo "$contents\n";
+exit(1);

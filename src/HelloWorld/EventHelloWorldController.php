@@ -24,7 +24,11 @@ use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Plugin\PluggableAnchorsInterface;
 use Chevere\Interfaces\Plugin\Plugs\EventListener\PluggableEventsInterface;
 use Chevere\Interfaces\Response\ResponseInterface;
+use Chevere\Interfaces\Response\ResponseSuccessInterface;
 
+/**
+ * @method self withEventListenersRunner(EventListenersRunnerInterface $eventsRunner)
+ */
 final class EventHelloWorldController extends HelloWorldController implements PluggableEventsInterface
 {
     use PluggableEventsTrait;
@@ -35,11 +39,11 @@ final class EventHelloWorldController extends HelloWorldController implements Pl
             ->withAdded('greetSet');
     }
 
-    public function run(ArgumentsInterface $arguments): ResponseInterface
+    public function run(ArgumentsInterface $arguments): ResponseSuccessInterface
     {
         $greet = sprintf('Hello, %s', $arguments->get('name'));
         $this->event('greetSet', [$greet]);
 
-        return (new ResponseSuccess([$greet]));
+        return $this->getResponseSuccess(['greet' => $greet]);
     }
 }

@@ -27,3 +27,4 @@ $writer = new StreamWriter(streamFor('php://stdout', 'w'));
 $varDump->withVars('a var', [], null)->process($writer);
 // All the above is the same as:
 xd('a var', [], null);
+// (you will see twice the output)

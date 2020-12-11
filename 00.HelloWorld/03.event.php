@@ -11,15 +11,12 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Controller\ControllerArguments;
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersQueue;
 use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersRunner;
 use Chevere\Components\Writer\Writers;
 use Chevere\Examples\HelloWorld\EventHelloWorldController;
 use Chevere\Examples\HelloWorld\HelloWorldEvent;
-use Chevere\Interfaces\Controller\ControllerInterface;
 
 require 'vendor/autoload.php';
 
@@ -32,18 +29,12 @@ $controller = $controller->withEventListenersRunner(
         $writers
     )
 );
-/**
- * @var ControllerInterface $controller
- */
-$arguments = new Arguments(
-    $controller->parameters(),
-    ['name' => 'World']
-);
-$runner = new ControllerRunner($controller);
-$ran = $runner->execute($arguments);
+$runner = new ActionRunner($controller);
+$ran = $runner->execute(name: 'World');
 $contents = implode(' ', $ran->data());
 if ($writers->out()->toString() != HelloWorldEvent::class . '>>>' . $contents) {
     echo "Unexpected event\n";
+    echo $writers->out()->toString() . "\n";
     exit(1);
 } else {
     echo "Event listened\n";

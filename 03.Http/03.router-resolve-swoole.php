@@ -11,10 +11,9 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Components\Plugin\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
@@ -22,7 +21,6 @@ use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerHtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Exceptions\Router\RouteNotFoundException;
-use Chevere\Interfaces\Controller\ControllerInterface;
 use Ds\Map;
 use Imefisto\PsrSwoole\Request as PsrRequest;
 use Imefisto\PsrSwoole\ResponseMerger;
@@ -75,21 +73,11 @@ $server->on('request', function (Request $request, Response $response) use (
             $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor($controllerName);
             $plugsQueueMap->put($controllerName, $hooksQueue);
         }
-        /**
-         * @var PluggableHooksInterface $controller
-         */
         $controller = $controller->withHooksRunner(
             new HooksRunner($hooksQueue)
         );
-        /**
-         * @var ControllerInterface $controller
-         */
-        $runner = new ControllerRunner($controller);
-        $arguments = new Arguments(
-            $controller->parameters(),
-            $routed->arguments()
-        );
-        $ran = $runner->execute($arguments);
+        $runner = new ActionRunner($controller);
+        $ran = $runner->execute(...$routed->arguments());
         $psrResponse = $psrFactory->createResponse();
         $psrResponse->getBody()->write(json_encode($ran->data()));
         $response->header('Content-Type', 'text/plain');
@@ -107,4 +95,4 @@ $server->on('request', function (Request $request, Response $response) use (
 });
 $server->start();
 
-// ["Hello, swoole!!"]
+// ["greet" => "Hello, swoole!!"]

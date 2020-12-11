@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Components\Controller\Controller;
+use Chevere\Components\Action\Controller;
 use Chevere\Components\Parameter\Parameters;
 use Chevere\Components\Parameter\StringParameter;
 use Chevere\Components\Regex\Regex;
@@ -21,6 +21,7 @@ use Chevere\Components\Response\ResponseSuccess;
 use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Parameter\ParametersInterface;
 use Chevere\Interfaces\Response\ResponseInterface;
+use Chevere\Interfaces\Response\ResponseSuccessInterface;
 
 class HelloWorldController extends Controller
 {
@@ -28,7 +29,7 @@ class HelloWorldController extends Controller
     {
         return (new Parameters)
             ->withAddedRequired(
-                (new StringParameter('name'))
+                name: (new StringParameter)
                     ->withRegex(new Regex('/\w+/'))
             );
     }
@@ -38,10 +39,18 @@ class HelloWorldController extends Controller
         return 'It returns Hello, <name>';
     }
 
-    public function run(ArgumentsInterface $arguments): ResponseInterface
+    public function getResponseDataParameters(): ParametersInterface
+    {
+        return (new Parameters)
+            ->withAddedRequired(
+                greet: new StringParameter
+            );
+    }
+
+    public function run(ArgumentsInterface $arguments): ResponseSuccessInterface
     {
         $greet = sprintf('Hello, %s', $arguments->get('name'));
 
-        return (new ResponseSuccess([$greet]));
+        return $this->getResponseSuccess(['greet' => $greet]);
     }
 }

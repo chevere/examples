@@ -11,13 +11,11 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Controller\ControllerRunner;
-use Chevere\Components\Parameter\Arguments;
+use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
 use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
 use Chevere\Examples\HelloWorld\HelloWorldHook;
 use Chevere\Examples\HelloWorld\HookHelloWorldController;
-use Chevere\Interfaces\Controller\ControllerInterface;
 
 require 'vendor/autoload.php';
 
@@ -28,18 +26,11 @@ $controller = $controller->withHooksRunner(
             ->withAdded(new HelloWorldHook)
     )
 );
-/**
- * @var ControllerInterface $controller
- */
-$arguments = new Arguments(
-    $controller->parameters(),
-    ['name' => 'World']
-);
-$runner = new ControllerRunner($controller);
-$ran = $runner->execute($arguments);
+$runner = new ActionRunner($controller);
+$ran = $runner->execute(name: 'World');
 $contents = implode(' ', $ran->data());
 if ($contents !== 'Hello, World!!') {
     echo "Unexpected contents\n";
-    exit(1);
 }
 echo "$contents\n";
+exit(1);

@@ -29,7 +29,7 @@ $maker = new RoutingDescriptorsMaker($dir->getChild('routes/'));
 $descriptors = $maker->descriptors();
 $router = routerForRoutingDescriptors($descriptors, 'example');
 $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
-    ->withAddedItem(
+    ->withPut(
         new CacheKey('my-route-collector'),
         new VarExportable($router->routeCollector())
     );

@@ -33,3 +33,5 @@ try {
     $loudWriter->write($docLoud->toString());
     $silentWriter->write($docSilent->toString());
 }
+echo "Wrote loud: $htmlLoud\n" .
+    "Wrote silent: $htmlSilent\n";
