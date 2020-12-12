@@ -11,15 +11,6 @@
             "homepage": "https://chevere.org/get-started/learn-by-example.html"
         }
     ],
-    "repositories": {
-        "dev-package": {
-            "type": "path",
-            "url": "/home/rodolfo/git/chevere/chevere",
-            "options": {
-                "symlink": true
-            }
-        }
-    },
     "autoload": {
         "psr-4": {
             "Chevere\\Examples\\": "src/"

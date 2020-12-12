@@ -30,8 +30,7 @@ use Swoole\Http\Response;
 use Swoole\Http\Server;
 use function Chevere\Components\Filesystem\dirForPath;
 
-// no xdebug!
-// 13428.49 req/s (php swoole)
+// 12,000 req/s
 
 require 'vendor/autoload.php';
 
