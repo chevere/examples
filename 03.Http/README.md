@@ -43,7 +43,7 @@ Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/).
 ./vendor/bin/rr get
 ```
 
-Run it using `rr`:
+Run the RoadRunner server using `rr`:
 
 ```shell
 ./rr serve -v 
@@ -61,9 +61,13 @@ curl http://127.0.0.1:8080/hello-roadrunner/
 
 ### [03.router-resolve-swoole.php](03.router-resolve-swoole.php)
 
-Same as `01.router-resolve.php` but under [Swoole](https://www.swoole.co.uk/). A cache mapping strategy is used on `$plugsQueueMap` and `$routesMap`.
+Same as `01.router-resolve.php` but under [Swoole](https://www.swoole.co.uk/). You need to run the following command to install Swoole:
 
-Run it using:
+```shell
+sudo pecl install swoole
+```
+
+A cache mapping strategy is used on `$plugsQueueMap` and `$routesMap`. Run the Swoole server using:
 
 ```shell
 php 03.Http/03.router-resolve-swoole.php
