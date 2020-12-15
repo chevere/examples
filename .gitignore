@@ -14,3 +14,8 @@
 
 # RoadRunner
 /rr
+
+# Generated files
+/00.HelloWorld/01.writer.php.log
+/01.ThrowableHandler/*.html
+/03.Http/cache
