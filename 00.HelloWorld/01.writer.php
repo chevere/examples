@@ -35,4 +35,4 @@ if ($contents !== 'Hello, World') {
     echo "Unexpected contents\n";
     exit(1);
 }
-echo 'Wrote: ' . $file->path()->absolute() . "\n";
+echo 'Wrote: ' . $file->path()->toString() . "\n";
