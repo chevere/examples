@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Instances\VarDumpInstance;
+use Chevere\Components\VarDump\VarDumpInstance;
 use Chevere\Components\Writer\StreamWriter;
 use function Chevere\Components\VarDump\varDumpHtml;
 use function Chevere\Components\Writer\streamFor;

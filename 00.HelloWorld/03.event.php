@@ -12,8 +12,8 @@
 declare(strict_types=1);
 
 use Chevere\Components\Action\ActionRunner;
-use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersQueue;
-use Chevere\Components\Plugin\Plugs\EventListeners\EventListenersRunner;
+use Chevere\Components\Pluggable\Plug\Event\EventListenersQueue;
+use Chevere\Components\Pluggable\Plug\Event\EventListenersRunner;
 use Chevere\Components\Writer\Writers;
 use Chevere\Examples\HelloWorld\EventHelloWorldController;
 use Chevere\Examples\HelloWorld\HelloWorldEvent;

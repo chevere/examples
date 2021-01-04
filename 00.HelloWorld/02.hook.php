@@ -12,8 +12,8 @@
 declare(strict_types=1);
 
 use Chevere\Components\Action\ActionRunner;
-use Chevere\Components\Plugin\Plugs\Hooks\HooksQueue;
-use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
+use Chevere\Components\Pluggable\Plug\Hook\HooksQueue;
+use Chevere\Components\Pluggable\Plug\Hook\HooksRunner;
 use Chevere\Examples\HelloWorld\HelloWorldHook;
 use Chevere\Examples\HelloWorld\HookHelloWorldController;
 

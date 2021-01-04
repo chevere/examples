@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Interfaces\Plugin\Plugs\EventListener\EventListenerInterface;
+use Chevere\Interfaces\Pluggable\Plug\Event\EventListenerInterface;
 use Chevere\Interfaces\Writer\WritersInterface;
 
 final class HelloWorldEvent implements EventListenerInterface

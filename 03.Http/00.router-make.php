@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Plugin\PlugsMapCache;
-use Chevere\Components\Plugin\PlugsMapper;
-use Chevere\Components\Plugin\Types\HookPlugType;
+use Chevere\Components\Pluggable\PlugsMapCache;
+use Chevere\Components\Pluggable\PlugsMapper;
+use Chevere\Components\Pluggable\Types\HookPlugType;
 use Chevere\Components\Router\Routing\RoutingDescriptorsMaker;
-use Chevere\Components\VarExportable\VarExportable;
+use Chevere\Components\VarStorable\VarStorable;
+
 use function Chevere\Components\Filesystem\dirForPath;
 use function Chevere\Components\Router\Routing\routerForRoutingDescriptors;
 
@@ -31,7 +32,7 @@ $router = routerForRoutingDescriptors($descriptors, 'example');
 $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
     ->withPut(
         new CacheKey('my-route-collector'),
-        new VarExportable($router->routeCollector())
+        new VarStorable($router->routeCollector())
     );
 echo "Cached my-route-collector\n";
 $plugsMapper = new PlugsMapper(

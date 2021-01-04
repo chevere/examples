@@ -14,8 +14,8 @@ declare(strict_types=1);
 use Chevere\Components\Action\ActionRunner;
 use Chevere\Components\Cache\Cache;
 use Chevere\Components\Cache\CacheKey;
-use Chevere\Components\Plugin\Plugs\Hooks\HooksRunner;
-use Chevere\Components\Plugin\PlugsMapCache;
+use Chevere\Components\Pluggable\Plug\Hook\HooksRunner;
+use Chevere\Components\Pluggable\PlugsMapCache;
 use Chevere\Components\Router\RouterDispatcher;
 use function Chevere\Components\Filesystem\dirForPath;
 
@@ -35,7 +35,7 @@ $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
     ->var();
 $dispatcher = new RouterDispatcher($routeCollector);
-$routed = $dispatcher->dispatch('GET', '/hello-chevere/');
+$routed = $dispatcher->dispatch('GET', '/hello-chevere');
 $controllerName = $routed->controllerName()->toString();
 $controller = new $controllerName;
 // Hooks caching

@@ -11,7 +11,8 @@
 
 declare(strict_types=1);
 
-use Chevere\Components\Instances\VarDumpInstance;
+use Chevere\Components\VarDump\VarDumpInstance;
+
 use function Chevere\Components\VarDump\varDumpPlain;
 
 require 'vendor/autoload.php';
