@@ -28,7 +28,7 @@ class HelloWorldController extends Controller
         return (new Parameters)
             ->withAddedRequired(
                 name: (new StringParameter)
-                    ->withRegex(new Regex('/\w+/'))
+                    ->withRegex(new Regex('/\S+/'))
             );
     }
 

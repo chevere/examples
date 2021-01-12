@@ -45,7 +45,7 @@ $routesMap = new Map;
 while ($psrRequest = $psr7->acceptRequest()) {
     try {
         $uri = $psrRequest->getUri();
-        $routed = $dispatcher->dispatch($psrRequest->getMethod(), $uri->getPath());
+        $routed = $dispatcher->dispatch($psrRequest->getMethod(), urldecode($uri->getPath()));
         $controllerName = $routed->controllerName()->toString();
         $controller = new $controllerName;
         try {

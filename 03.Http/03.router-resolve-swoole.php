@@ -63,7 +63,7 @@ $server->on('request', function (Request $request, Response $response) use (
     try {
         $psrRequest = new PsrRequest($request, $psrFactory, $psrFactory);
         $uri = $psrRequest->getUri();
-        $routed = $dispatcher->dispatch($psrRequest->getMethod(), $uri->getPath());
+        $routed = $dispatcher->dispatch($psrRequest->getMethod(), urldecode($uri->getPath()));
         $controllerName = $routed->controllerName()->toString();
         $controller = new $controllerName;
         try {
