@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Interfaces\Pluggable\Plug\Event\EventListenerInterface;
+use Chevere\Interfaces\Pluggable\Plug\Event\EventInterface;
 use Chevere\Interfaces\Writer\WritersInterface;
 
-final class HelloWorldEvent implements EventListenerInterface
+final class HelloWorldEvent implements EventInterface
 {
     public function __invoke(array $data, WritersInterface $writers): void
     {
-        $writers->out()->write(__CLASS__ . '>>>' . implode(' ', $data));
+        $writers->output()->write(__CLASS__ . '>>>' . implode(' ', $data));
     }
 
     public function anchor(): string

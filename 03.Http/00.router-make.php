@@ -26,7 +26,8 @@ require 'vendor/autoload.php';
 
 $dir = dirForPath(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
-$maker = new RoutingDescriptorsMaker('routes', $dir->getChild('routes/'));
+$maker = new RoutingDescriptorsMaker('routes');
+$maker = $maker->withDescriptorsFor($dir->getChild('routes/'));
 $descriptors = $maker->descriptors();
 $router = routerForRoutingDescriptors($descriptors, 'example');
 $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
@@ -35,10 +36,9 @@ $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
         new VarStorable($router->routeCollector())
     );
 echo "Cached my-route-collector\n";
-$plugsMapper = new PlugsMapper(
-    dirForPath(dirname(__DIR__) . '/src/'),
-    new HookPlugType
-);
+$plugsMapper = new PlugsMapper(new HookPlugType);
+$plugsMapper = $plugsMapper
+    ->withPlugsMapFor(dirForPath(dirname(__DIR__) . '/src/'));
 $plugsMapCache = new PlugsMapCache(
     new Cache($cacheDir->getChild('plugs/hooks/'))
 );

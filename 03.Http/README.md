@@ -46,15 +46,15 @@ Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/).
 Run the RoadRunner server using `rr`:
 
 ```shell
-./rr serve -v 
+./rr serve
 ```
 
 > The configuration can be found at [`.rr.yaml`](../.rr.yaml)
 
-Requests `http://127.0.0.1:8080/🐘-hello-roadrunner`
+Requests `http://127.0.0.1:8080/hello-roadrunner`
 
 ```shell
-curl http://127.0.0.1:8080/🐘-hello-roadrunner
+curl http://127.0.0.1:8080/hello-roadrunner
 ```
 
 > Outputs ["greet" => "Hello, roadrunner!!"]
@@ -73,10 +73,10 @@ A cache mapping strategy is used on `$plugsQueueMap` and `$routesMap`. Run the S
 php 03.Http/03.router-resolve-swoole.php
 ```
 
-Requests `http://127.0.0.1:9501/🐘-hello-swoole`
+Requests `http://127.0.0.1:9501/hello-swoole`
 
 ```shell
-curl http://127.0.0.1:9501/🐘-hello-swoole
+curl http://127.0.0.1:9501/hello-swoole
 ```
 
 > Outputs ["greet" => "Hello, swoole!!"]

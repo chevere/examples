@@ -38,7 +38,6 @@ $dispatcher = new RouterDispatcher($routeCollector);
 $routed = $dispatcher->dispatch('GET', '/🐘-hello-chevere');
 $controllerName = $routed->controllerName()->toString();
 $controller = new $controllerName;
-// Hooks caching
 $plugsMapCache = new PlugsMapCache(
     new Cache($cacheDir->getChild('plugs/hooks/'))
 );
@@ -49,5 +48,3 @@ $controller = $controller->withHooksRunner(
 $runner = new ActionRunner($controller);
 $ran = $runner->execute(name: 'chevere');
 echo json_encode($ran->data());
-
-// ["greet" => "Hello, World!!"]

@@ -20,7 +20,7 @@
         "chevere/chevere": "dev-main",
         "imefisto/psr-swoole-native": "^0.0.1",
         "nyholm/psr7": "^1.3",
-        "spiral/roadrunner": "^1.8"
+        "spiral/roadrunner": "^2"
     },
     "require-dev": {
         "spatie/ray": "^1.5"

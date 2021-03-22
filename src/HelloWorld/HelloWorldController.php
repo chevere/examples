@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Examples\HelloWorld;
 
-use Chevere\Components\Action\Controller;
+use Chevere\Components\Controller\Controller;
 use Chevere\Components\Parameter\Parameters;
 use Chevere\Components\Parameter\StringParameter;
 use Chevere\Components\Regex\Regex;
@@ -25,11 +25,10 @@ class HelloWorldController extends Controller
 {
     public function getParameters(): ParametersInterface
     {
-        return (new Parameters)
-            ->withAddedRequired(
-                name: (new StringParameter)
+        return new Parameters(
+            name: (new StringParameter)
                     ->withRegex(new Regex('/\S+/'))
-            );
+        );
     }
 
     public function getDescription(): string
@@ -37,12 +36,11 @@ class HelloWorldController extends Controller
         return 'It returns Hello, <name>';
     }
 
-    public function getResponseDataParameters(): ParametersInterface
+    public function getResponseParameters(): ParametersInterface
     {
-        return (new Parameters)
-            ->withAddedRequired(
-                greet: new StringParameter
-            );
+        return new Parameters(
+            greet: new StringParameter
+        );
     }
 
     public function run(ArgumentsInterface $arguments): ResponseInterface

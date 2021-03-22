@@ -1,6 +1,13 @@
+rpc:
+  listen: tcp://127.0.0.1:6001
+
 http:
-  address: 0.0.0.0:8080
-  workers:
-    command: "php 03.Http/02.router-resolve-roadrunner.php"
-    pool:
-      numWorkers: 4
+  address: "0.0.0.0:8080"
+
+server:
+  command: "php 03.Http/02.router-resolve-roadrunner.php"
+  env:
+    DEBUG: true
+
+logs:
+  level: debug
