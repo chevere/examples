@@ -6,8 +6,3 @@ http:
 
 server:
   command: "php 03.Http/02.router-resolve-roadrunner.php"
-  env:
-    DEBUG: true
-
-logs:
-  level: debug
