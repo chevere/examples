@@ -32,9 +32,9 @@ $worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psr
 
 while ($request = $worker->waitRequest()) {
     try {
-        $uri = $request->getUri();
-        $routed = $dispatcher->dispatch($request->getMethod(), urldecode($uri->getPath()));
-        $controllerName = $routed->controllerName()->toString();
+        // $uri = $request->getUri();
+        // $routed = $dispatcher->dispatch($request->getMethod(), urldecode($uri->getPath()));
+        // $controllerName = $routed->controllerName()->toString();
         // $controller = new $controllerName;
         // try {
         //     $hooksQueue = $plugsQueueMap->get($controllerName);
@@ -52,6 +52,7 @@ while ($request = $worker->waitRequest()) {
         $response->getBody()->write('Hello, RR!');
         $worker->respond($response);
     } catch (Throwable $e) {
+        file_put_contents('php://stderr', (string)$e);
         // $worker->getWorker()->error((string)$e);
     }
 }
