@@ -3,6 +3,8 @@ rpc:
 
 http:
   address: "0.0.0.0:8080"
+  pool:
+    num_workers: 4
 
 server:
   command: "php 03.Http/02.router-resolve-roadrunner.php"
