@@ -32,27 +32,31 @@ $worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psr
 
 while ($request = $worker->waitRequest()) {
     try {
-        // $uri = $request->getUri();
-        // $routed = $dispatcher->dispatch($request->getMethod(), urldecode($uri->getPath()));
-        // $controllerName = $routed->controllerName()->toString();
-        // $controller = new $controllerName;
-        // try {
-        //     $hooksQueue = $plugsQueueMap->get($controllerName);
-        // } catch (OutOfBoundsException $e) {
-        //     $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor($controllerName);
-        //     $plugsQueueMap->put($controllerName, $hooksQueue);
-        // }
-        // $controller = $controller->withHooksRunner(
-        //     new HooksRunner($hooksQueue)
-        // );
-        // $runner = new ActionRunner($controller);
-        // $ran = $runner->execute(...$routed->arguments());
+        $uri = $request->getUri();
+        try {
+            $routed = $dispatcher->dispatch($request->getMethod(), urldecode($uri->getPath()));
+        } catch(Throwable $e) {
+            return;
+        }
+        $controllerName = $routed->controllerName()->toString();
+        $controller = new $controllerName;
+        try {
+            $hooksQueue = $plugsQueueMap->get($controllerName);
+        } catch (OutOfBoundsException $e) {
+            $hooksQueue = $plugsMapCache->getPlugsQueueTypedFor($controllerName);
+            $plugsQueueMap->put($controllerName, $hooksQueue);
+        }
+        $controller = $controller->withHooksRunner(
+            new HooksRunner($hooksQueue)
+        );
+        $runner = new ActionRunner($controller);
+        $ran = $runner->execute(...$routed->arguments());
         $response = new Psr7\Response();
-        // $response->getBody()->write(json_encode($ran->data()));
-        $response->getBody()->write('Hello, RR!');
+        $response->getBody()->write(json_encode($ran->data()));
+        // $response->getBody()->write('Hello, RR!');
         $worker->respond($response);
     } catch (Throwable $e) {
-        file_put_contents('php://stderr', (string)$e);
-        // $worker->getWorker()->error((string)$e);
+        // file_put_contents('php://stderr', (string)$e);
+        $worker->getWorker()->error((string)$e);
     }
 }
