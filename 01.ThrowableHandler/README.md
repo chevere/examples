@@ -1,14 +1,5 @@
 # 01.ThrowableHandler
 
-- [01.ThrowableHandler](#01throwablehandler)
-  - [Description](#description)
-  - [Examples](#examples)
-    - [00.handle-plain.php](#00handle-plainphp)
-    - [01.handle-console.php](#01handle-consolephp)
-    - [02.handle-html.php](#02handle-htmlphp)
-    - [03.errors-as-exception.php](#03errors-as-exceptionphp)
-    - [04.exceptions-in-console.php](#04exceptions-in-consolephp)
-
 ## Description
 
 Showcase on [exception handling](https://www.php.net/manual/en/language.exceptions.php) strategies.
@@ -39,7 +30,7 @@ An example using `\set_error_handler` for handling errors as exceptions.
 
 > Output `Caught an error as exception`
 
-### [04.exceptions-in-console.php](04.exceptions-in-console.php)
+### [04.register-handler.php](04.register-handler.php)
 
 An example using `\set_exception_handler` for handling exceptions in the console.
 

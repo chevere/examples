@@ -16,20 +16,25 @@ use Chevere\Components\Cache\CacheKey;
 use Chevere\Components\Pluggable\PlugsMapCache;
 use Chevere\Components\Pluggable\PlugsMapper;
 use Chevere\Components\Pluggable\Types\HookPlugType;
+use Chevere\Components\Router\Router;
 use Chevere\Components\Router\Routing\RoutingDescriptorsMaker;
-use Chevere\Components\VarStorable\VarStorable;
+use Chevere\Components\Var\VarStorable;
 
 use function Chevere\Components\Filesystem\dirForPath;
+use function Chevere\Components\Router\importRoutes;
+use function Chevere\Components\Router\router;
 use function Chevere\Components\Router\Routing\routerForRoutingDescriptors;
 
 require 'vendor/autoload.php';
 
+set_exception_handler('Chevere\Components\ThrowableHandler\consoleHandler');
+
 $dir = dirForPath(__DIR__ . '/');
 $cacheDir = $dir->getChild('cache/');
-$maker = new RoutingDescriptorsMaker('routes');
-$maker = $maker->withDescriptorsFor($dir->getChild('routes/'));
-$descriptors = $maker->descriptors();
-$router = routerForRoutingDescriptors($descriptors, 'example');
+$router = router(
+    group: 'example',
+    routes: importRoutes(__DIR__ . '/routes/web.php')
+);
 $cacheRouteCollector = (new Cache($cacheDir->getChild('router/')))
     ->withPut(
         new CacheKey('my-route-collector'),

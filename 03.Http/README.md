@@ -19,9 +19,17 @@ Examples on HTTP resolving. The route is at [`routes`](routes) and cache is stor
 
 This file is used to generate both cached routing and plugin mapping, which are used in akk examples of this chapter.
 
+```shell
+php 03.Http/00.router-make.php 
+```
+
 > Generates router cache at [`cache/router/`](cache/router/) and hooks plugs map cache at [`cache/plugs/hooks/`](cache/plugs/hooks/)
 
 ### [01.router-resolve.php](01.router-resolve.php)
+
+```shell
+php 03.Http/01.router-resolve.php
+```
 
 Resolves cached routing for the `/hello-chevere` uri, applying hooks.
 
@@ -37,7 +45,9 @@ Requests `http://127.0.0.1:8888/01.router-resolve.php`
 
 ### [02.router-resolve-roadrunner.php](02.router-resolve-roadrunner.php)
 
-Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/). You will need to build the binary running the following command:
+Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/).
+
+You will need to build the binary running the following command:
 
 ```shell
 ./vendor/bin/rr get

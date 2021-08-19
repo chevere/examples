@@ -21,13 +21,17 @@ use Chevere\Interfaces\Parameter\ArgumentsInterface;
 use Chevere\Interfaces\Parameter\ParametersInterface;
 use Chevere\Interfaces\Response\ResponseInterface;
 
+use function Chevere\Components\Parameter\parameters;
+use function Chevere\Components\Parameter\stringParameter;
+
 class HelloWorldController extends Controller
 {
     public function getParameters(): ParametersInterface
     {
-        return new Parameters(
-            name: (new StringParameter)
-                    ->withRegex(new Regex('/\S+/'))
+        return parameters(
+            name: stringParameter(
+                regex:'/\S+/'
+            )
         );
     }
 
@@ -38,8 +42,8 @@ class HelloWorldController extends Controller
 
     public function getResponseParameters(): ParametersInterface
     {
-        return new Parameters(
-            greet: new StringParameter
+        return parameters(
+            greet: stringParameter()
         );
     }
 

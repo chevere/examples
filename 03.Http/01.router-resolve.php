@@ -35,7 +35,7 @@ $routeCollector = (new Cache($cacheDir->getChild('router/')))
     ->get(new CacheKey('my-route-collector'))
     ->var();
 $dispatcher = new RouterDispatcher($routeCollector);
-$routed = $dispatcher->dispatch('GET', '/🐘-hello-chevere');
+$routed = $dispatcher->dispatch('GET', '/hello-chevere');
 $controllerName = $routed->controllerName()->toString();
 $controller = new $controllerName;
 $plugsMapCache = new PlugsMapCache(
