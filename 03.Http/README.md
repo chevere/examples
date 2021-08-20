@@ -50,7 +50,7 @@ Same as `01.router-resolve.php` but under [RoadRunner](https://roadrunner.dev/).
 You will need to build the binary running the following command:
 
 ```shell
-./vendor/bin/rr get
+./vendor/bin/rr get-binary
 ```
 
 Run the RoadRunner server using `rr`:
