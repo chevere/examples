@@ -8,7 +8,7 @@ Showcase on [exception handling](https://www.php.net/manual/en/language.exceptio
 
 ### [00.handle-plain.php](00.handle-plain.php)
 
-A basic `try/catch` example. Once the exception gets caught, it is analyzed by the [exception handler]() which is used to generate a plain exception document.
+A basic `try/catch` example. Once the exception gets caught, it is analyzed by the exception handler which is used to generate a plain exception document.
 
 > Output a plain text exception document
 
