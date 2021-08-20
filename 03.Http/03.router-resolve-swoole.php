@@ -21,6 +21,7 @@ use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerHtmlDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
 use Chevere\Exceptions\Router\RouteNotFoundException;
+use Chevere\Interfaces\Controller\ControllerInterface;
 use Ds\Map;
 use Imefisto\PsrSwoole\Request as PsrRequest;
 use Imefisto\PsrSwoole\ResponseMerger;
@@ -49,6 +50,8 @@ $psrFactory = new Psr17Factory;
 $responseMerger = new ResponseMerger;
 $plugsQueueMap = new Map;
 $routesMap = new Map;
+$controllers = new Map;
+$runners = new Map;
 $server->on('start', function (Server $server)
 {
     echo "Swoole http server is started at http://127.0.0.1:9501\n";
@@ -58,14 +61,22 @@ $server->on('request', function (Request $request, Response $response) use (
     $dispatcher,
     $psrFactory,
     $responseMerger,
-    $plugsQueueMap
+    $plugsQueueMap,
+    $controllers,
+    $runners
 ) {
     try {
         $psrRequest = new PsrRequest($request, $psrFactory, $psrFactory);
         $uri = $psrRequest->getUri();
         $routed = $dispatcher->dispatch($psrRequest->getMethod(), urldecode($uri->getPath()));
         $controllerName = $routed->controllerName()->toString();
-        $controller = new $controllerName;
+        /** @var ControllerInterface $controller */
+        try {
+            $controller = $controllers->get($controllerName);
+        } catch(OutOfBoundsException $e) {
+            $controller = new $controllerName;
+            $controllers->put($controllerName, $controller);
+        }
         try {
             $hooksQueue = $plugsQueueMap->get($controllerName);
         } catch (OutOfBoundsException $e) {
@@ -75,7 +86,12 @@ $server->on('request', function (Request $request, Response $response) use (
         $controller = $controller->withHooksRunner(
             new HooksRunner($hooksQueue)
         );
-        $runner = new ActionRunner($controller);
+        try {
+            $runner = $runners->get($controllerName);
+        } catch (OutOfBoundsException $e) {
+            $runner = new ActionRunner($controller);
+            $runners->put($controllerName, $runner);
+        }
         $ran = $runner->execute(...$routed->arguments());
         $psrResponse = $psrFactory->createResponse();
         $psrResponse->getBody()->write(json_encode($ran->data()));
